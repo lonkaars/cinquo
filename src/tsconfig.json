@@ -2,12 +2,11 @@
     "compilerOptions": {
         "moduleResolution": "node",
         "pretty": false,
-		"target": "ESNext",
-		"watch": true
+		"target": "ESNext"
     },
     "include": [
         "*.ts",
-        "server/*.ts",
+        "server/*.ts"
     ],
     "exclude": [
         "node_modules"

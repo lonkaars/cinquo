@@ -10,9 +10,10 @@
 4. `git clone https://github.com/lonkaars/cinquo`
 5. `cd cinquo/src`
 6. `npm i`
-7. If you run Windows, you should now run `npm run rebuild`
+7. `tsc`
+8. If you run Windows, you should now run `npm run rebuild`
 
-<div style="text-align: center;">
+<div align="center">
 <b>You have now installed Cinquo, to start run `npm start` in cinquo's root directory.</b>
 <h2>🎉</h2>
 
