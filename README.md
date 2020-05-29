@@ -15,6 +15,11 @@ Currently this project is still a work-in-progress, but some funcitonality is he
 
 ### Screenshots
 
+<p float="left">
+  <img src="/md/client.png" width="49%"/>
+  <img src="/md/settings.png" width="50%"/>
+</p>
+
 ---
 
 ### Features

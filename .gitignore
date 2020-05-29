@@ -1,4 +1,6 @@
 *.js
+src/server/user/palettes/*
+!src/server/user/palettes/example
 !src/client/**/*.js
 !src/lib/**/*.js
 !src/settings/**/*.js
