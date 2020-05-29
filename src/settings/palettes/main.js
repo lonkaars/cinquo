@@ -28,7 +28,10 @@ palettes.forEach(name => {
 	var app = { name };
 	var appPath = path.join(__dirname, '/../../server/user/palettes/', name);
 	var appDir = fs.readdirSync(appPath);
-	var iconFile = appDir.find(f => f.includes('icon')).match(/^(.+\.)(.+)$/);
+	// this is a temporary fix for the thing not saving the icon to a file properly
+	var iconIndex = appDir.find(f => f.includes('icon'))
+	if (!iconIndex) return;
+	var iconFile = iconIndex.match(/^(.+\.)(.+)$/);
 	app.icon = {
 		data: fs.readFileSync(path.join(appPath, iconFile[0]), "base64"),
 		type: iconFile[2]
