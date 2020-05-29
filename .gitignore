@@ -1,6 +1,7 @@
 *.js
 src/server/user/palettes/*
 src/node_modules
+src/package-lock.json
 !src/server/user/palettes/example
 !src/client/**/*.js
 !src/lib/**/*.js
