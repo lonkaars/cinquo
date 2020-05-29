@@ -10,11 +10,12 @@
 4. `git clone https://github.com/lonkaars/cinquo`
 5. `cd cinquo/src`
 6. `npm i`
-7. `tsc`
-8. If you run Windows, you should now run `npm run rebuild`
+7. `npm i -g typescript`
+8. `tsc`
+9. If you run Windows, you should now run `npm run rebuild`
 
 <div align="center">
-<b>You have now installed Cinquo, to start run `npm start` in cinquo's root directory.</b>
+<b>You have now installed Cinquo, to start run `npm start` in cinquo's root directory</b>
 <h2>🎉</h2>
 
 If you want to set up midi as well, take a look at the <a href="midi.md">midi setup guide</a>
