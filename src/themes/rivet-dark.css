@@ -1,0 +1,67 @@
+:root {
+    --shade0: #0a0216;
+    --shade7: #faf9fc;
+    --accent0: #f54456;
+    --accent1: #fc7022;
+    --accent2: #d6cd00;
+    --accent3: #91e827;
+    --accent4: #00c580;
+    --accent5: #305dfb;
+    --accent6: #7635de;
+    --accent7: #f98fd1;
+    --shade1: #2c2537;
+    --shade2: #4f4958;
+    --shade3: #716c79;
+    --shade4: #938f99;
+    --shade5: #b5b2ba;
+    --shade6: #d8d6db;
+}
+
+.button {
+    width: 48px !important;
+    height: 32px !important;
+    position: relative !important;
+    cursor: pointer !important;
+}
+
+.button .track {
+    width: 48px !important;
+    height: 6px !important;
+    background-color: var(--shade3) !important;
+    border-radius: 3px !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    box-shadow: none !important;
+    transform: translate(-50% ,-50%) !important;
+}
+
+.button .thumb {
+    background-color: var(--shade0) !important;
+    box-shadow: 0px 0px 0px 4px var(--shade0) !important;
+    border-radius: 12px !important;
+    position: absolute !important;
+    top: 50% !important;
+    transform: translate(-50% ,-50%) !important;
+    transition: border .2s, left .2s, width .2s, height .2s !important;
+}
+
+.button.on .thumb {
+    border: 10px solid var(--shade7) !important;
+    left: 75% !important;
+    height: 0px !important;
+    width: 0px !important;
+}
+
+.button.off .thumb {
+    border: 4px solid var(--shade4) !important;
+    left: 25% !important;
+    height: 12px !important;
+    width: 12px !important;
+}
+
+button {
+    background-color: var(--shade0) !important;
+    color: var(--accent-color) !important;
+    box-shadow: inset 0px 0px 0px 2px var(--accent-color) !important;
+}

@@ -1,0 +1,138 @@
+body {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    color: #fff;
+    font-family: 'Google Sans';
+    background: #000;
+    overflow: hidden;
+    position: fixed;
+    --saturation: 100%;
+    --lightness: 50%;
+    --hue: 0;
+    /* overscroll-behavior: none; */
+}
+
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-user-select: none;
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+
+.body {
+    width: 100vw;
+    height: 100vh;
+    background: #000000;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    /* background: url(https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_960_720.jpg); */
+}
+
+.hid {
+    visibility: hidden;
+}
+
+.translucent {
+    -webkit-backdrop-filter: saturate(1.2) blur(50px) brightness(0.7);
+    backdrop-filter: saturate(1.2) blur(50px) brightness(0.7);
+}
+
+.returnToFullView {
+    color: #fff;
+    z-index: 999999999999999;
+    font-size: 50px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background: #000;
+    border-radius: 0 0 0 30px;
+    width: 40px;
+    height: 40px;
+}
+
+.returnToFullView .icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.dialogBox {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    position: absolute;
+    background: #0005;
+    backdrop-filter: blur(10px) saturate(1.2) brightness(0.9);
+}
+
+.dialogBox .window {
+    width: calc(100% - 150px);
+    height: calc(100% - 150px);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #121212;
+    border-radius: 10px;
+    box-shadow: 0px 6px 15px -3px #0008;
+    overflow: hidden;
+}
+
+.disconnected {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99;
+    backdrop-filter: blur(50px) saturate(1.5) brightness(0.5);
+    transition: backdrop-filter 1s;
+}
+
+.disconnected .inner {
+    text-align: center;
+    width: fit-content;
+    white-space: nowrap;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.disconnected .inner * {
+    display: inline-block;
+    transition: opacity 1s;
+}
+
+.disconnected .inner h1 {
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.disconnected.hidden {
+    backdrop-filter: blur(0px) saturate(1) brightness(1);
+    pointer-events: none;
+}
+
+.disconnected.hidden .inner * {
+    opacity: 0;
+}

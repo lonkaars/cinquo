@@ -1,0 +1,15 @@
+{
+	"meta": {
+		"lang": "English (US)",
+		"version": 1
+	},
+	"DevSettingsName": "Developer options",
+	"DevSettingsHeader": "Developer options",
+	"DevSettingsButtons": "Buttons",
+	"DevSettingsReloadWindow": "Reload Window",
+	"DevSettingsToggleDevTools": "Toggle DevTools",
+	"DevSettingsElectronReload": "Enable electron-reload",
+	"DevSettingsDevToolsOnStart": "Open DevTools on start",
+	"DevSettingsEnableDevSettings": "Enable (these) developer settings",
+	"DevSettingsElectronShortcuts": "Enable default electron shortcuts"
+}

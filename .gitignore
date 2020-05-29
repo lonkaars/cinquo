@@ -1,0 +1,5 @@
+*.js
+!src/client/**/*.js
+!src/lib/**/*.js
+!src/settings/**/*.js
+!src/server/modules/**/*.js

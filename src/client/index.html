@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <link rel="icon" href="/client/round.png" sizes="512x512">
+    <link rel="manifest" type="application/json+manifest" href="/client/manifest.webmanifest">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Main</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Cinquo">
+    <link rel="apple-touch-icon" href="/client/square.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="/client/square.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <preference name="DisallowOverscroll" value="true" />
+    <meta name="theme-color" content="#000"/>
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+
+    <link href="/lib/material-icons.css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    <link rel='stylesheet' type='text/css' media='screen' href='/font/googleSans.css'>
+
+    <link rel='stylesheet' type='text/css' media='screen' href='/client/css/global.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/client/css/topBar.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/client/css/panels.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/client/css/newPanel.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/client/css/toast.css'>
+
+    <link rel='stylesheet' type='text/css' media='screen' href='/lib/grapick.min.css'>
+    <script src="/lib/nosleep.min.js"></script>
+    <script src="/lib/grapick.min.js"></script>
+    <script src="/lib/jquery-3.4.1.min.js"></script>
+    <script src="/lib/jquery-ui.min.js"></script>
+    <script src="/lib/anime.min.js"></script>
+    <script src="/lib/socketgd.js"></script>
+    <script src="/lib/socket.io.js"></script>
+    <script src="/lib/prefixfree.min.js"></script>
+    <script src="/lib/conic-gradient.js"></script>
+    <script src="/lib/ace/ace.js"></script>
+    <script src="/client/script.js"></script>
+
+    <!-- On-device inspector -->
+    <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script> -->
+</head>
+
+<body ontouchstart>
+    <div class="body">
+
+        <!-- <div class="dialogBox">
+            <div class="window">
+                <div class="leftPanel">
+                    <h1>New Panel</h1>
+                    <div id="jsonEditor"></div>
+
+                    <h2>Select Action</h2>
+                    <div class="select closed">
+                        <i class="label">Input</i>
+                        <i class="material-icons-round icon">keyboard_arrow_down</i>
+                        <div class="options" id="listinput">
+                            <div class="option" id="option-1">Option 1</div>
+                            <div class="option" id="option-2">Option 2</div>
+                            <div class="option" id="option-3">Option 3</div>
+                            <div class="option" id="option-4">Option 4</div>
+                        </div>
+                    </div><br>
+                    <button><i class="material-icons-round icon">close</i><span>Close</span></button><br>
+                    <br>
+                    <br>
+                    <input type="checkbox">
+                    <br>
+                    <br>
+                    <h2>Color picker</h2>
+                    <div id="gp" class="gradient-picker"></div>
+                </div>
+                <div class="rightPanel">
+                    <h1>Preview</h1>
+                    <div class="panelPreview">
+                        <div class="panel tile-id-0 medium large" style="background: linear-gradient(225deg, #ff7f52 0%, #a11a1a 100%); width: 200px; height: 200px;">
+                            <p class="name">Open Command Palette</p>
+                            <i class="material-icons-round icon">palette</i>
+                        </div>
+
+                        <div class="panel tile-id-1 withSlider medium tall" style="background: linear-gradient(225deg, #ffff52 0%, #a11aff 100%); width: 108px; height: 216px;">
+                            <p class="name">midi</p>
+                            <input class="slider slider-id-1" type="range" step="0.01" oninput="slider('.slider-id-1')" onclick="slider('.slider-id-1')" onchange="slider('.slider-id-1')" min="0" max="127">
+                            <p class="value slider-id-1">63</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="select closed">
+                    <i class="label">Input</i>
+                    <i class="material-icons-round icon">keyboard_arrow_down</i>
+                    <div class="options" id="listinput">
+                        <div class="option" id="option-1">Option 1</div>
+                        <div class="option" id="option-2">Option 2</div>
+                        <div class="option" id="option-3">Option 3</div>
+                        <div class="option" id="option-4">Option 4</div>
+                    </div>
+                </div><br><br><br>
+                <div class="select closed">
+                    <i class="label">Input</i>
+                    <i class="material-icons-round icon">keyboard_arrow_down</i>
+                    <div class="options" id="listinput2">
+                        <div class="option" id="option-1">Option 1</div>
+                        <div class="option" id="option-2">Option 2</div>
+                        <div class="option" id="option-3">Option 3</div>
+                        <div class="option" id="option-4">Option 4</div>
+                    </div>
+                </div>
+                <div class="close">
+                    <i class="material-icons-round icon">cancel</i>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="topBar translucent">
+            <i class="material-icons-round icon menu">menu</i>
+            <div class="currentApp">
+                <div class="icon"></div>
+                <h1 class="appName"></h1>
+                <h2 class="procName"></h2>
+				<h1 class="toast"></h1>
+				<h1 class="toast alt"></h1>
+            </div>
+            <div class="stretch">
+                <!-- <i class="material-icons-round icon">settings</i> -->
+                <!-- <i class="material-icons-round icon">view_quilt</i> -->
+                <!-- <i class="material-icons-round icon">help_outline</i> -->
+                <!-- <i class="material-icons-round icon">aspect_ratio</i> -->
+                <i class="icon material-icons-round" onclick="location.reload()">refresh</i>
+                <div class="connectionStatus"></div>
+            </div>
+        </div>
+
+        <!-- <div class="returnToFullView">
+            <i class="material-icons-round icon">view_day</i>
+        </div> -->
+        <div class="panels" id="panel1"></div>
+        <div class="panels" id="panel2"></div>
+
+        <div class="disconnected hidden">
+            <div class="inner">
+                <h1>Connection lost</h1><br>
+                <h2>Please restart the server</h2>
+            </div>
+        </div>
+        <!-- <div class="toast"> -->
+        <!--     <h1>This is an example toast</h1> -->
+        <!-- </div> -->
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+:root {
+    --accent0: #e95678;
+    --accent1: #f09483;
+    --accent2: #fab795;
+    --accent3: #29d398;
+    --accent4: #59e1e3;
+    --accent5: #26bbd9;
+    --accent6: #b877db;
+    --accent7: #ee64ac;
+    --shade0: #16161c;
+    --shade1: #1a1c23;
+    --shade2: #1c1e26;
+    --shade3: #232530;
+    --shade4: #2e303e;
+    --shade5: #6c6f93;
+    --shade6: #babad1;
+    --shade7: #e5e5e5;
+}
+
+button {
+    transition-property: transform, opacity;
+    transition-duration: .2s;
+}
+
+button:hover {
+    transform: scale(.95);
+}
+
+button:active {
+    transform: scale(.8);
+    opacity: .9;
+}
+
+.button.off .track {
+    background-color: var(--shade4) !important;
+}
+
+.button.on:hover .thumb {
+    left: 26px;
+}
+.button.off:hover .thumb {
+    left: 6px;
+}
+
+.button.on:active .thumb {
+    left: 23px;
+}
+.button.off:active .thumb {
+    left: 9px;
+}
+
+.list:not(.open):hover {
+    height: 40px;
+}
+
+
+input[type="text"],
+input[type="number"] {
+    box-shadow: 0px 4px 10px #0003,
+                0px 0px 0px var(--accent-color);
+    transition-property: background-color, color, box-shadow, margin !important;
+    position: relative;
+    margin-left: 0px;
+}
+
+input[type="text"]:hover,
+input[type="number"]:hover {
+    box-shadow: 0px 4px 10px #0003,
+                -5px 0px 0px var(--accent-color);
+    margin-left: 5px;
+}
+

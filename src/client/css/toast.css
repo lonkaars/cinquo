@@ -1,0 +1,59 @@
+:root {
+	--toast-color: #000;
+	--toast-border: 0px;
+}
+
+.currentApp {
+	transition-property: box-shadow;
+	transition-duration: 300ms;
+	box-shadow: inset 0px 0px 0px 0px var(--toast-color);
+	overflow: hidden;
+}
+
+.currentApp.toasting {
+	box-shadow: inset 0px 0px 0px 2px var(--toast-color);
+}
+
+.currentApp .toast {
+	display: inline-block !important;
+	font-size: 15px;
+	opacity: 0;
+	transition-property: filter, opacity;
+	transition-duration: 300ms;
+}
+.currentApp.blurFx .toast {
+	filter: blur(10px);
+}
+
+.currentApp .toast {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.currentApp.toasting .toast {
+	opacity: 1;
+	filter: blur(0px);
+}
+
+.currentApp .icon,
+.currentApp .procName,
+.currentApp .appName {
+	transition-property: opacity, filter;
+	transition-duration: 300ms;
+	opacity: 1;
+	filter: blur(0px);
+}
+
+.currentApp.toasting .icon,
+.currentApp.toasting .procName,
+.currentApp.toasting .appName {
+	opacity: 0;
+}
+.currentApp.toasting.blurFx .icon,
+.currentApp.toasting.blurFx .procName,
+.currentApp.toasting.blurFx .appName {
+	filter: blur(10px);
+}
+

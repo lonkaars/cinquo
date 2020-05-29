@@ -1,0 +1,89 @@
+.topBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 64px;
+    background: #0008;
+    z-index: 50;
+}
+
+.topBar .currentApp {
+    width: 400px;
+    height: 48px;
+    background: #181818dd;
+    border-radius: 6px;
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+	transition: box-shadow .3s;
+}
+
+.topBar .currentApp .icon {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 32px;
+    height: 32px;
+}
+
+.topBar .currentApp .appName,
+.topBar .currentApp .procName {
+    position: absolute;
+    top: 24px;
+    left: 48px;
+    font-size: 15px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 344px;
+}
+
+.topBar .currentApp .procName {
+    color: #fff4;
+    font-style: italic;
+    font-size: 15px;
+}
+
+.topBar .currentApp .appName {
+    transform: translateY(-100%);
+}
+
+.topBar .icon,
+.topBar .stretch .icon {
+    position: absolute;
+    top: 19px;
+}
+
+.topBar .stretch .icon {
+    transform: translateX(-50%);
+}
+
+.topBar .icon.menu {
+    left: 19px;
+}
+
+.topBar .stretch {
+    position: absolute;
+    top: 0;
+    right: 8px;
+    height: 64px;
+    width: calc(50% - 216px);
+}
+
+.topBar .stretch .icon:nth-child(1) {
+    left: 12.5%;
+}
+
+.topBar .stretch .icon:nth-child(2) {
+    left: 37.5%;
+}
+
+.topBar .stretch .icon:nth-child(3) {
+    left: 62.5%;
+}
+
+.topBar .stretch .icon:nth-child(4) {
+    left: 87.5%;
+}

@@ -1,0 +1,183 @@
+[{
+    "name": "Open Command Palette",
+    "type": "button",
+    "icon": {
+        "type": "material-icon",
+        "value": "palette"
+    },
+    "action": {
+        "type": "keystroke",
+        "key": "p",
+        "modifiers": [
+            "control",
+            "shift"
+        ]
+    },
+    "display": {
+        "type": "gradient",
+        "dark": true,
+        "value": {
+            "rotation": 45,
+            "colors": [
+                "#ff7f52",
+                "#a11a1a"
+            ]
+        }
+    },
+    "where": {
+        "x": 0,
+        "y": 0,
+        "h": 4,
+        "w": 4
+    },
+    "id": 0
+}, {
+    "name": "midi",
+    "type": "slider",
+    "min": 0,
+    "max": 127,
+    "display": {
+        "type": "gradient",
+        "dark": true,
+        "value": {
+            "rotation": 45,
+            "colors": [
+                "#ffff52",
+                "#a11aff"
+            ]
+        },
+        "displaySliderValue": true
+    },
+    "action": {
+        "type": "midi",
+        "midiData": [176, 46, "var"]
+    },
+    "where": {
+        "x": 4,
+        "y": 0,
+        "h": 4,
+        "w": 2
+    },
+    "id": 1
+}, {
+    "name": "midi",
+    "type": "button",
+    "icon": {
+        "type": "material-icon",
+        "value": "keyboard"
+    },
+    "display": {
+        "type": "gradient",
+        "dark": true,
+        "value": {
+            "rotation": -45,
+            "colors": [
+                "#ffff52",
+                "#a11aff"
+            ]
+        }
+    },
+    "action": {
+        "type": "midi",
+        "midiData": [
+            [144, 80, 127],
+            [128, 80, 127]
+        ],
+        "midiDelay": 50
+    },
+    "where": {
+        "x": 6,
+        "y": 0,
+        "h": 2,
+        "w": 2
+    },
+    "id": 2
+}, {
+    "name": "notepad",
+    "type": "button",
+    "icon": {
+        "type": "material-icon",
+        "value": "note"
+    },
+    "display": {
+        "type": "gradient",
+        "dark": true,
+        "value": {
+            "rotation": -45,
+            "colors": [
+                "#ffff52",
+                "#a11aff"
+            ]
+        }
+    },
+    "action": {
+        "type": "file",
+        "file": "C:/Windows/system32/notepad.exe"
+    },
+    "where": {
+        "x": 8,
+        "y": 0,
+        "h": 2,
+        "w": 2
+    },
+    "id": 9825347
+}, {
+    "name": "mp4",
+    "type": "button",
+    "icon": {
+        "type": "material-icon",
+        "value": "music_video"
+    },
+    "display": {
+        "type": "gradient",
+        "dark": true,
+        "value": {
+            "rotation": -45,
+            "colors": [
+                "#ffff52",
+                "#a11aff"
+            ]
+        }
+    },
+    "action": {
+        "type": "file",
+        "file": "D:/Downloadsloek/video01.mp4"
+    },
+    "where": {
+        "x": 10,
+        "y": 0,
+        "h": 2,
+        "w": 2
+    },
+    "id": 3455
+}, {
+    "name": "module",
+    "type": "button",
+    "icon": {
+        "type": "material-icon",
+        "value": "view_module"
+    },
+    "display": {
+        "type": "gradient",
+        "dark": true,
+        "value": {
+            "rotation": -45,
+            "colors": [
+                "#ffff52",
+                "#a11aff"
+            ]
+        }
+    },
+    "action": {
+        "type": "module",
+        "module": "chapo",
+        "data": "Hello World!"
+    },
+    "where": {
+        "x": 12,
+        "y": 0,
+        "h": 2,
+        "w": 4
+    },
+    "id": 345512323144
+}]

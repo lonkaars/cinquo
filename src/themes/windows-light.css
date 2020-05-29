@@ -1,0 +1,99 @@
+:root {
+    --accent0: #e81123;
+    --accent1: #f7630c;
+    --accent2: #ffb900;
+    --accent3: #82d936;
+    --accent4: #00cc6a;
+    --accent5: #00b7c3;
+    --accent6: #0063b1;
+    --accent7: #9a0089;
+    --shade0: #ffffff;
+    --shade1: #e6e6e6;
+    --shade2: #cccccc;
+    --shade3: #999999;
+    --shade4: #777777;
+    --shade5: #222222;
+    --shade6: #111111;
+    --shade7: #000000;
+}
+
+* {
+    font-family: "Segoe UI";
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1) !important;
+}
+
+input, .list, button {
+    border-radius: 0 !important;
+    border-color: var(--shade4) !important;
+    box-shadow: none !important;
+}
+
+.label {
+    font-weight: 300 !important;
+    margin-bottom: 3px !important;
+}
+
+button {
+    box-shadow: none !important;
+    background: var(--shade1) !important;
+    color: var(--shade7) !important;
+    font-weight: 400 !important;
+    text-transform: none !important;
+    min-width: 90px;
+}
+
+.tooltip {
+    border-radius: 0 !important;
+    padding: 3px 5px !important;
+    background: var(--shade1);
+    border: 1px solid var(--shade6);
+}
+
+.button .track {
+    width: 44 !important;
+    height: 20 !important;
+    border-radius: 10px !important;
+}
+
+.button .thumb {
+    width: 10px !important;
+    height: 10px !important;
+    border-radius: 5px !important;
+    top: 5px !important;
+    background: var(--shade7) !important;
+}
+
+.button.on .track {
+    box-shadow: none !important;
+}
+
+.button.off .track {
+    background: var(--shade0) !important;
+    box-shadow: inset 0px 0px 0px 2px var(--shade7);
+}
+
+.button.off .thumb {
+    left: 5px !important;
+}
+
+.button.on .thumb {
+    left: 29px !important;
+}
+
+.list .arrow {
+    color: var(--shade7) !important;
+}
+
+#console {
+    border-radius: 0 !important;
+}
+
+.app {
+    border-radius: 0 !important;
+}
+
+.list .item.select {
+    background: var(--shade0) !important;
+    box-shadow: inset 0px 0px 0px 2px var(--shade4) !important;
+    color: var(--shade7) !important;
+}

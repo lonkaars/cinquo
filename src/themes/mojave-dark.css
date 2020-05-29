@@ -1,0 +1,123 @@
+:root {
+    --shade0: #222323;
+    --shade7: #dddddd;
+    --accent0: #ff453a;
+    --accent1: #ff9f0a;
+    --accent2: #ffd60a;
+    --accent3: #30d158;
+    --accent4: #64d2ff;
+    --accent5: #0a84ff;
+    --accent6: #bf5af2;
+    --accent7: #ff375f;
+    --shade1: #3d3e3e;
+    --shade2: #575858;
+    --shade3: #727373;
+    --shade4: #8d8d8d;
+    --shade5: #a8a8a8;
+    --shade6: #c2c2c2;
+}
+
+*:not(.material-icons-round):not(.title) {
+    font-family: 'SF Pro Display' !important;
+}
+
+.button * {
+    border-radius: 90px !important;
+}
+
+.button .thumb {
+    width: 21px !important;
+    height: 21px !important;
+    box-shadow: 0px 1px 3px #00000029 !important;
+    transition-property: left, width !important;
+    top: 2px !important;
+}
+
+.button.on .thumb {
+    left: 17px !important;
+}
+
+.button.off:active .thumb {
+    width: 25px !important;
+}
+.button.on:active .thumb {
+    width: 25px !important;
+    left: 13px !important;
+}
+.button.off .thumb {
+    left: 2px !important;
+}
+
+.button .track {
+    width: 40px !important;
+    height: 25px !important;
+    box-shadow: none !important;
+    background-color: var(--shade2) !important;
+}
+.button.off .track {
+    background-color: var(--shade2) !important;
+}
+.button.on .track {
+    background-color: var(--accent-color) !important;
+}
+
+input[type="text"],
+input[type="number"] {
+    box-shadow: none !important;
+    border: none !important;
+    background-color: var(--shade1) !important;
+}
+
+button {
+    font-family: 'SF Pro Display' !important;
+    font-weight: 300 !important;
+    text-transform: none !important;
+    padding: 4px 10px !important;
+    min-width: 75px;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+}
+
+span.label {
+    font-weight: 500 !important;
+    margin-bottom: 3px !important;
+}
+
+.list {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.list:not(.open) {
+    height: 29px !important;
+}
+
+.list .item.select {
+    background-color: var(--shade1) !important;
+    color: var(--shade7) !important;
+}
+.list.open .item.select {
+    background-color: var(--shade2) !important;
+}
+
+.list {
+    position: relative !important;
+}
+
+.list .item.select .arrow {
+    position: absolute !important;
+    right: -5px !important;
+    top: -5px !important;
+    opacity: 1 !important;
+    color: #fff !important;
+    padding: 9px !important;
+    background-color: var(--accent-color) !important;
+}
+
+.app {
+    box-shadow: none !important;
+}
+
+* {
+    box-shadow: none !important;
+}

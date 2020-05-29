@@ -1,0 +1,13 @@
+{
+    "blurFx": false,
+    "serverPort": "3000",
+    "alwaysPalette": "",
+    "startMinimized": false,
+    "launchAtStartup": false,
+    "settingsTheme": "themes/default-dark.css",
+    "electronReload": true,
+    "devToolsOnStart": false,
+    "devMenu": true,
+    "defaultShortcuts": true,
+    "language": "en-us"
+}

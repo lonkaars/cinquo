@@ -1,0 +1,16 @@
+{
+    "name": "Cinquo",
+    "short_name": "Cinquo",
+    "start_url": "/client/index.html",
+    "display": "standalone",
+    "background_color": "#000",
+    "theme_color": "#000",
+    "orientation": "landscape",
+    "scope": "../",
+    "icons": [{
+        "src": "/client/square.png",
+        "type": "image/png",
+        "sizes": "512x512",
+        "purpose": "maskable"
+    }]
+}

@@ -1,0 +1,15 @@
+{
+	"meta": {
+		"lang": "Nederlands",
+		"version": 1
+	},
+	"DevSettingsName": "Ontwikkelaarsopties",
+	"DevSettingsHeader": "Ontwikkelaarsopties",
+	"DevSettingsButtons": "Knopjes",
+	"DevSettingsReloadWindow": "Herlaad venster",
+	"DevSettingsToggleDevTools": "Open DevTools",
+	"DevSettingsElectronReload": "Gebruik electron-reload",
+	"DevSettingsDevToolsOnStart": "Open DevTools bij opstarten",
+	"DevSettingsEnableDevSettings": "Maak deze opties zichtbaar",
+	"DevSettingsElectronShortcuts": "Gebruik de standaard electron sneltoetsen"
+}

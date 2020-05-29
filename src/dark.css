@@ -1,0 +1,27 @@
+body.dark .button.off .track {
+	background: var(--shade1);
+}
+
+body.dark .list .item.select {
+	background-color: var(--shade0);
+}
+
+body.dark .close:hover .material-icons-round {
+	color: var(--shade7);
+}
+
+body.dark .list {
+	border: 2px solid var(--accent-color);
+}
+
+body.dark .list .arrow {
+	color: var(--accent-color);
+}
+
+body.dark button {
+	box-shadow: 0px 3px 25px -9px var(--accent-color);
+}
+
+body.dark .button.on .track {
+	box-shadow: 0px 4px 20px -10px var(--accent-color);
+}
