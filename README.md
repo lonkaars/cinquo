@@ -51,21 +51,4 @@ Installation guide is [here](md/installation.md)
 
 Cinquo is currently in a pretty much unusable state for regular users. I wouldn't recommend using this for important tasks, because all network traffic isn't encrypted. RobotJS doesn't work on Linux (for me?) with Node 12 and electron, and there are performace issues that cause a delay when changing app focus and it being reflected client-side which doesn't happen on Windows.
 
-There are however planned features for milestone builds 1.0.0 and 2.0.0
-
-#### 1.0.0
-
-- Fix performace issues in processMetadata.ts to remove delay between app focus changes for Linux
-- Find a solution that makes RobotJS work on Linux
-- Create a user-friendly interface for creating and managing palettes in the settings utility
-- A plugin system that exposes an api, so other developers can add additional functionality, like new tile types, new actions and other cool stuff
-- MacOS compatibility
-- Use default system config file locations, and auto-generate the necessary files
-- Remove user-specified id's in palette files
-
-#### 2.0.0
-
-- Implement end-to-end encryption for all traffic
-- Add password protection
-- Add ability to create and manage palettes client-side
-
+See the issues tab for planned features, known bugs and progress on milestone builds.
