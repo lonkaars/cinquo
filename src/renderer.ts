@@ -1,4 +1,4 @@
-var $ = require(__dirname + '/lib/jquery-3.4.1.min.js'),
+var $ = require('jquery'),
 	fs = require('fs'),
 	Terminal = require('xterm').Terminal,
 	tooltip = false,
