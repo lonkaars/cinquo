@@ -33,6 +33,7 @@
         "jquery": "^3.5.1",
         "linux-desktop": "^1.0.2",
         "lodash": "^4.17.15",
+        "midi": "^1.0.0",
         "mousetrap": "^1.6.3",
         "node-brightness": "^0.2.1",
         "nosleep.js": "^0.11.0",

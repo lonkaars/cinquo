@@ -1,11 +1,11 @@
-var robot = undefined/* require('robotjs') */,
+var robot = require('robotjs'),
 	openFile = require('open'),
-	/* midi = require('midi'), */
-	/* output = new midi.Output(), */
+	midi = require('midi'),
+	output = new midi.Output(),
 	fs = require('fs');
-/* for (let i = 0; i < output.getPortCount(); i++) { */
-/* 	if (output.getPortName(i).toLowerCase().includes('cinquo')) output.openPort(i) */
-/* } */
+
+// Get cinquo loop midi device
+for (let i = 0; i < output.getPortCount(); i++) if (output.getPortName(i).toLowerCase().includes('cinquo')) output.openPort(i);
 
 // Load modules
 var dirs = fs.readdirSync(__dirname + "/modules")
