@@ -10,9 +10,10 @@
 4. `git clone https://github.com/lonkaars/cinquo`
 5. `cd cinquo/src`
 6. `npm i`
-7. `npm i -g typescript`
-8. `tsc`
-9. If you run Windows, you should now run `npm run rebuild`
+7. `npm i -g typescript electron-rebuild`
+8. `npm list electron`
+9. `electron-rebuild . --version=<electron version>`
+10. `tsc`
 
 <div align="center">
 <b>You have now installed Cinquo, to start run `npm start` in cinquo's root directory</b>
