@@ -22,20 +22,18 @@ var express = require('express'),
 	tiles = [],
 	oldProcess: any = {};
 
-Array.prototype["isIn"] = function(item) {
+Array.prototype["isIn"] = function(item: string) {
 	var returnVal = false
-	this.forEach(i => {
-		if (String(i).toLowerCase().includes(String(item).toLowerCase())) {
-			returnVal = true
-		};
-	})
-	return returnVal
+	this.forEach((i: string) => {
+		if (i.toLowerCase().includes(item.toLowerCase())) {
+			returnVal = true;
+		}
+	});
+	return returnVal;
 }
 
-async function sendData(client) {
-	console.time("getCurrentProcess")
+async function sendData(client: any) {
 	var currentProcess: any = await processMetadata.getCurrentProcess(oldProcess);
-	console.timeEnd("getCurrentProcess")
 
 	// Only send window title if it changed
 	if (oldProcess.title != currentProcess.title) client.emit('currentAppTitle', currentProcess.title);
@@ -61,42 +59,41 @@ async function sendData(client) {
 	oldProcess = currentProcess;
 }
 
-io.on('connection', async socket => {
-	process.send(chalk.yellow(chalk.bold('Connection from ')) + chalk.magenta(socket.handshake.address))
+io.on('connection', async (socket: any) => {
+	process.send(chalk.yellow(chalk.bold('Connection from ')) + chalk.magenta(socket.handshake.address));
 
-	socketgd.setSocket(socket)
+	socketgd.setSocket(socket);
 
-	socketgd.emit('prefrences', config)
+	socketgd.emit('prefrences', config);
 
 	// Event listeners
 	socketgd.on('ready', async () => {
-		await sendData(socketgd)
+		await sendData(socketgd);
 		setInterval(async () => {
-			await sendData(socketgd)
+			await sendData(socketgd);
 		}, 500);
-	})
+	});
 
-	socketgd.on('tile', (data, ack, msgID) => {
-		actions.action(tiles.find(i => i.id == data.el.match(/\d+/)), data)
+	socketgd.on('tile', (data: any, ack: any) => {
+		actions.action(tiles.find(i => i.id == data.el.match(/\d+/)), data);
 		ack();
-	})
+	});
 
-	socketgd.on('type', (data, ack, msgID) => {
-		require('robotjs').typeString(data)
+	socketgd.on('type', (data: any, ack: any) => {
+		require('robotjs').typeString(data);
 		ack();
 	});
 });
 
-
-expressApp.use(express.static(path.join(__dirname, '..')));
-expressApp.get("/", function(request, response) {
+expressApp.use(express.static(path.join(__dirname, '/../')));
+expressApp.all("/", (request: any, response: any) => {
 	response.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
-var errorcatch = err => process.send(JSON.stringify(err))
-/* process.on('uncaughtException', err => errorcatch(err)); */
-/* process.on('warning', err => errorcatch(err)); */
-/* process.on('unhandledRejection', err => errorcatch(err)); */
+var errorcatch = (err: any) => process.send(JSON.stringify(err));
+process.on('uncaughtException', err => errorcatch(err));
+process.on('warning', err => errorcatch(err));
+process.on('unhandledRejection', err => errorcatch(err));
 
 server.on('listening', () => {
 	process.send(chalk.blue(chalk.bold(`Server started on *:${config.serverPort}`)));
