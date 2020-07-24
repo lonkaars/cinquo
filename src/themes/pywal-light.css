@@ -1,0 +1,20 @@
+@import url("file:///home/loek/.config/cinquo/themes/pywal.css");
+
+:root {
+    --accent0: var(--pywal-color0);
+    --accent1: var(--pywal-color1);
+    --accent2: var(--pywal-color2);
+    --accent3: var(--pywal-color3);
+    --accent4: var(--pywal-color4);
+    --accent5: var(--pywal-color5);
+    --accent6: var(--pywal-color6);
+    --accent7: var(--pywal-color7);
+    --shade0: var(--pywal-shade7);
+    --shade1: var(--pywal-shade6);
+    --shade2: var(--pywal-shade5);
+    --shade3: var(--pywal-shade4);
+    --shade4: var(--pywal-shade3);
+    --shade5: var(--pywal-shade2);
+    --shade6: var(--pywal-shade1);
+    --shade7: var(--pywal-shade0);
+}

@@ -16,18 +16,17 @@ var express = require('express'),
 	writefile = util.promisify(fs.writeFile),
 	allApps = fs.readdirSync(__dirname + '/user/palettes'),
 	c = require('chalk'),
-	chalk = new c.Instance({
-		level: 1
-	}),
+	chalk = new c.Instance({ level: 1 }),
 	tiles = [],
 	oldProcess: any = {};
+
+// debugging server outside electron
+if(typeof process.send == "undefined") process.send = console.log;
 
 Array.prototype["isIn"] = function(item: string) {
 	var returnVal = false
 	this.forEach((i: string) => {
-		if (i.toLowerCase().includes(item.toLowerCase())) {
-			returnVal = true;
-		}
+		if (i.toLowerCase().includes(item.toLowerCase())) returnVal = true;
 	});
 	return returnVal;
 }
@@ -85,12 +84,13 @@ io.on('connection', async (socket: any) => {
 	});
 });
 
-expressApp.use(express.static(path.join(__dirname, '/../')));
+
+expressApp.use(express.static(path.join(__dirname, '..')));
 expressApp.all("/", (request: any, response: any) => {
 	response.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
-var errorcatch = (err: any) => process.send(JSON.stringify(err));
+var errorcatch = err => process.send(JSON.stringify(err))
 process.on('uncaughtException', err => errorcatch(err));
 process.on('warning', err => errorcatch(err));
 process.on('unhandledRejection', err => errorcatch(err));
@@ -99,3 +99,4 @@ server.on('listening', () => {
 	process.send(chalk.blue(chalk.bold(`Server started on *:${config.serverPort}`)));
 });
 server.listen(config.serverPort);
+
