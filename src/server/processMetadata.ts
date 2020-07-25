@@ -26,10 +26,19 @@ module.exports.getCurrentProcess = async function(oldApp: any) {
 	var readCachedIcon: boolean = false;
 	var noIcon: boolean = false;
 
+	if(!win) return {
+		unfName: "",
+		name: "",
+		title: "",
+		executable: "",
+		noWin: true
+	}
+
 	returnObj.unfName = win.owner.name;
 	returnObj.name = win.owner.name;
 	returnObj.title = win.title;
 	returnObj.executable = win.owner.path;
+	returnObj.noWin = false;
 
 	if(oldApp && returnObj.unfName == oldApp.unfName) noIcon = true;
 

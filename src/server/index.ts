@@ -37,17 +37,17 @@ async function sendData(client: any) {
 	// Only send window title if it changed
 	if (oldProcess.title != currentProcess.title) client.emit('currentAppTitle', currentProcess.title);
 
-	// Send process name and icon if it changed
-	if (currentProcess.name.trim() != "" && oldProcess.executable != currentProcess.executable) {
-		var path: string = __dirname.replace(/\\/g, "/") + "/user/palettes/" + currentProcess.name;
+	if (currentProcess.noWin) client.emit('currentApp', '{"icon": "none", "procName": ""}');
 
-		if (allApps.includes(config.alwaysPalette)) {
-			tiles = JSON.parse(await readfile(__dirname.replace(/\\/g, "/") + "/user/palettes/" + config.alwaysPalette + '/palette.json'));
-			client.emit('tilesNoAnimation', makeTiles(tiles, config));
-		} else {
-			tiles = JSON.parse(await readfile(path + '/palette.json'));
-			client.emit('tiles', makeTiles(tiles, config));
-		}
+	// Send process name and icon if it changed
+	if (oldProcess.executable != currentProcess.executable && currentProcess.noWin == false) {
+		var path: string = __dirname.replace(/\\/g, "/") + "/user/palettes/" + currentProcess.name;
+		var alwaysPalette = allApps.includes(config.alwaysPalette);
+		var tilesPath = alwaysPalette
+			? __dirname.replace(/\\/g, "/") + "/user/palettes/" + config.alwaysPalette + '/palette.json'
+			: path + '/palette.json';
+		tiles = JSON.parse(await readfile(tilesPath));
+		client.emit(!alwaysPalette ? 'tiles' : 'tilesNoAnimation', makeTiles(tiles, config));
 
 		client.emit('currentApp', JSON.stringify({
 			icon: currentProcess.icon.formatted,
@@ -90,10 +90,10 @@ expressApp.all("/", (request: any, response: any) => {
 	response.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
-var errorcatch = err => process.send(JSON.stringify(err))
-process.on('uncaughtException', err => errorcatch(err));
-process.on('warning', err => errorcatch(err));
-process.on('unhandledRejection', err => errorcatch(err));
+var errorcatch = (err: Error) => process.send(chalk.red(err.stack.replace(/\n/g, '\n\r')))
+process.on('uncaughtException', (err: Error) => errorcatch(err));
+process.on('warning', (err: Error) => errorcatch(err));
+process.on('unhandledRejection', (err: Error) => errorcatch(err));
 
 server.on('listening', () => {
 	process.send(chalk.blue(chalk.bold(`Server started on *:${config.serverPort}`)));
