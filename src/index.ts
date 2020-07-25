@@ -111,7 +111,7 @@ server.on('message', data => {
 
 ipcMain.on('serverRestart', () => {
 	server.kill();
-	server = cp.fork(__dirname + '/server/index.js');
+	server = cp.fork(__dirname + '/server/index.js', {stdio: 'pipe'});
 	server.on('message', data => {
 		var formatted = formatTermData(data);
 

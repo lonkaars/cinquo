@@ -1,11 +1,13 @@
-var exeicon: any, linuxDesktop: any;
+let exeicon: any, linuxDesktop: any;
 switch (process.platform) {
-	case 'win32':
+	case 'win32': {
 		exeicon = require('icon256').extractIconAsync;
+	}
 
-	case 'linux':
+	case 'linux': {
 		linuxDesktop = require('linux-desktop');
-	linuxDesktop.indexItems();
+		linuxDesktop.indexItems();
+	}
 }
 var activeWin = require('active-win');
 var fs = require('fs');
@@ -18,16 +20,25 @@ var readdir = util.promisify(fs.readdir);
 var path = require('path');
 var emptyPng = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 
-module.exports.getCurrentProcess = async function(oldApp) {
+module.exports.getCurrentProcess = async function(oldApp: any) {
 	var returnObj: any = {};
 	var win: any = await activeWin();
 	var readCachedIcon: boolean = false;
 	var noIcon: boolean = false;
 
+	if(!win) return {
+		unfName: "",
+		name: "",
+		title: "",
+		executable: "",
+		noWin: true
+	}
+
 	returnObj.unfName = win.owner.name;
 	returnObj.name = win.owner.name;
 	returnObj.title = win.title;
 	returnObj.executable = win.owner.path;
+	returnObj.noWin = false;
 
 	if(oldApp && returnObj.unfName == oldApp.unfName) noIcon = true;
 
@@ -35,63 +46,53 @@ module.exports.getCurrentProcess = async function(oldApp) {
 		if (String(i).toLowerCase().includes(String(returnObj.name).toLowerCase())) readCachedIcon = true;
 	})
 
-	console.time("switch")
 	switch (process.platform) {
-		case 'win32':
+		case 'win32': {
 			returnObj.name = win.owner.name.slice(0, -4);
-		if (!readCachedIcon && !noIcon) returnObj.icon = {
-			data: await exeicon(returnObj.executable),
-			type: 'png'
-		}
-		break;
-
-		case 'linux':
-			console.time("findDesktopEntry")
-		var desktopEntry: any = linuxDesktop.findByExacutable(returnObj.executable);
-		console.timeEnd("findDesktopEntry")
-		if (!desktopEntry) {
-			var p: string[] = returnObj.executable.split('/')
-			desktopEntry = linuxDesktop.findByCommand(p[p.length - 1])
-		} else {
-			console.time("refineEntry")
-			var desktopFile: any = linuxDesktop.refineEntry(desktopEntry);
-			console.timeEnd("refineEntry")
-			returnObj.name = desktopFile.Name;
-			var filetype: any = String(desktopFile.Icon).match(/^(.+\.)(.+)$/)[2];
-			/* console.log(desktopFile.Icon) */
 			if (!readCachedIcon && !noIcon) returnObj.icon = {
-				data: await readfile(desktopFile.Icon, "base64"),
-				type: filetype
-			};
+				data: await exeicon(returnObj.executable),
+				type: 'png'
+			}
+			break;
 		}
-		break;
+
+		case 'linux': {
+			var desktopEntry: any = linuxDesktop.findByExacutable(returnObj.executable);
+			if (!desktopEntry) {
+				var p: string[] = returnObj.executable.split('/')
+				desktopEntry = linuxDesktop.findByCommand(p[p.length - 1])
+			} else {
+				// refineEntry is really slow
+				var desktopFile: any = linuxDesktop.refineEntry(desktopEntry);
+				returnObj.name = desktopFile.Name;
+				var filetype: any = String(desktopFile.Icon).match(/^(.+\.)(.+)$/)[2];
+				if (!readCachedIcon && !noIcon) returnObj.icon = {
+					data: await readfile(desktopFile.Icon, "base64"),
+					type: filetype
+				};
+			}
+			break;
+		}
 	}
-	console.timeEnd("switch")
 
-	// findDesktopEntry: 0.038ms
-	// refineEntry: 1679.093ms
-	// switch: 1679.285ms
-	// readCachedIcon: true
-	// noIcon: true
-
-	// WYYYYYYYYY >:(((
-
-	console.log(`readCachedIcon: ${readCachedIcon}\nnoIcon: ${noIcon}`)
 	if (readCachedIcon && !noIcon) {
 		var location: string = __dirname.replace(/\\/g, "/") + "/user/palettes/" + returnObj.name
 		var files: string[] = await readdir(location)
-		var iconFile: any = files.find(f => f.includes('icon')).match(/^(.+\.)(.+)$/);
-		returnObj.icon = {
-			data: await readfile(path.join(location, iconFile[0]), "base64"),
-			type: iconFile[2]
-		};
-	} else /* if(!allApps.includes(returnObj.name)) */ {
+		// temp fix n.2
+		var iconIndex: any = files.find(f => f.includes('icon'))
+		if(iconIndex) {
+			var iconFile: any = iconIndex.match(/^(.+\.)(.+)$/);
+			returnObj.icon = {
+				data: await readfile(path.join(location, iconFile[0]), "base64"),
+				type: iconFile[2]
+			};
+		}
+	} else if(!allApps.includes(returnObj.name)) {
 		var appPath = __dirname + '/user/palettes/' + returnObj.name
 		allApps.push(returnObj.name)
 		await mkdir(appPath);
 		await writefile(appPath + '/app.json', '{}')
 		await writefile(appPath + '/palette.json', '[]')
-		console.log(`type: ${returnObj.icon.type} data: ${returnObj.icon.data.toString().substr(0, 20)}`)
 		await writefile(appPath + '/icon.' + returnObj.icon.type, returnObj.icon.data, 'base64')
 	}
 

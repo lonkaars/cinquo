@@ -1,6 +1,7 @@
 :root {
 	--toast-color: #000;
 	--toast-border: 0px;
+	--toast-max-blur: 5px;
 }
 
 .currentApp {
@@ -22,7 +23,7 @@
 	transition-duration: 300ms;
 }
 .currentApp.blurFx .toast {
-	filter: blur(10px);
+	filter: blur(var(--toast-max-blur));
 }
 
 .currentApp .toast {
@@ -54,6 +55,6 @@
 .currentApp.toasting.blurFx .icon,
 .currentApp.toasting.blurFx .procName,
 .currentApp.toasting.blurFx .appName {
-	filter: blur(10px);
+	filter: blur(var(--toast-max-blur));
 }
 
