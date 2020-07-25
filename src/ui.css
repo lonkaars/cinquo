@@ -2,6 +2,11 @@
 	--menu-width: 250px;
 }
 
+body, html {
+    margin: 0;
+    font-family: 'Google Sans';
+}
+
 body {
 	transition-duration: .2s;
 	transition-property: color;
@@ -26,6 +31,10 @@ body {
 
 ::-webkit-scrollbar-thumb {
 	background-color: var(--shade2);
+}
+
+.xterm-viewport::-webkit-scrollbar {
+	background-color: var(--shade1) !important;
 }
 
 .material-icons-round {
@@ -519,6 +528,10 @@ input[type=number]::-webkit-inner-spin-button {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
+	max-width: calc(100% - 60px);
+}
+.apps .app.noIcon .exename {
+	left: 16px;
 	max-width: calc(100% - 60px);
 }
 

@@ -41,7 +41,7 @@
 }
 
 .panels .panel:not(.withSlider) {
-    transition: transform .2s;
+    transition: transform .1s;
 }
 .panels .panel:not(.withSlider):active {
     transform: scale(.95);
