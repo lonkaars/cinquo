@@ -46,14 +46,14 @@ $(document).ready(() => {
 	editor.session.setMode('ace/mode/json');
 
 	var gp = new Grapick({
-	    el: "#gp"
+		el: "#gp"
 	});
 
 	gp.addHandler(0, '#f00');
 	gp.addHandler(100, '#ff0');
 
 	gp.on('change', complete => {
-	    document.body.style.background = gp.getSafeValue();
+		document.body.style.background = gp.getSafeValue();
 	}) */
 })
 

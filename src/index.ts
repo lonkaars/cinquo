@@ -9,15 +9,14 @@ const {
 var confg = require(__dirname + '/server/user/config.json'),
 	autolaunch = require('auto-launch'),
 	startup = new autolaunch({
-		name: 'Cinquo',
-		path: `${__dirname}/cinquo.vbs`
-	})
+	name: 'Cinquo',
+	path: `${__dirname}/cinquo.vbs`
+});
 
-if (confg.electronReload) {
-	require('electron-reload')(__dirname)
-}
+if (confg.electronReload)
+	require('electron-reload')(__dirname);
 
-startup[confg.launchAtStartup ? 'enable' : 'disable']()
+startup[confg.launchAtStartup ? 'enable' : 'disable']();
 
 // server
 var cp = require('child_process');
@@ -28,8 +27,7 @@ var serverOutput = [];
 var chalk = require('chalk');
 
 
-let win
-let tray
+let win, tray;
 
 function createWindow() {
 	win = new BrowserWindow({
@@ -44,25 +42,20 @@ function createWindow() {
 		icon: __dirname + "/icon.png"
 	});
 
-	if (confg.devToolsOnStart) win.webContents.openDevTools()
-	if (!confg.defaultShortcuts) win.setMenu(null)
+	if (confg.devToolsOnStart)
+		win.webContents.openDevTools();
+	if (!confg.defaultShortcuts)
+		win.setMenu(null);
 
-
-	win.loadFile('main.html')
-
-
-	win.on('closed', () => {
-		win = null
-	})
-
-	win.webContents.on('dom-ready', () => {
-		win.webContents.send('previousServerLogs', serverOutput)
-	})
+	win.loadFile('main.html');
+	win.on('closed', () => win = null);
+	win.webContents.on('dom-ready', () => win.webContents.send('previousServerLogs', serverOutput));
 }
 
 app.on('ready', () => {
 	createTray()
-	if (!confg.startMinimized) createWindow()
+	if (!confg.startMinimized)
+		createWindow();
 })
 
 app.on('window-all-closed', e => e.preventDefault())
@@ -72,10 +65,9 @@ ipcMain.on('quit', () => {
 })
 
 app.on('activate', () => {
-	if (win === null) {
-		createWindow()
-	}
-})
+	if (win === null)
+		createWindow();
+});
 
 function createTray() {
 	tray = new Tray(__dirname + '/icon.png')
@@ -95,9 +87,7 @@ function createTray() {
 	]);
 	tray.setContextMenu(contextMenu);
 	tray.setToolTip('Cinquo Daemon');
-	tray.on('click', () => {
-		win ? win.show() : createWindow()
-	})
+	tray.on('click', () => win ? win.show() : createWindow());
 }
 
 
@@ -105,8 +95,9 @@ function createTray() {
 server.on('message', data => {
 	var formatted = formatTermData(data);
 
-	if (win) win.webContents.send('serverMessage', formatted);
-	serverOutput.push(formatted)
+	if (win)
+		win.webContents.send('serverMessage', formatted);
+	serverOutput.push(formatted);
 })
 
 ipcMain.on('serverRestart', () => {
@@ -115,11 +106,13 @@ ipcMain.on('serverRestart', () => {
 	server.on('message', data => {
 		var formatted = formatTermData(data);
 
-		if (win) win.webContents.send('serverMessage', formatted);
-		serverOutput.push(formatted)
+		if (win)
+			win.webContents.send('serverMessage', formatted);
+		serverOutput.push(formatted);
 	})
 })
 
 function formatTermData(data) {
 	return `${chalk.gray(`[${new Date().toLocaleTimeString('nl')}] `)}${data}\n\r`
 }
+

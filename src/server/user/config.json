@@ -4,7 +4,7 @@
     "alwaysPalette": "",
     "startMinimized": false,
     "launchAtStartup": false,
-    "settingsTheme": "themes/default-dark.css",
+    "settingsTheme": "themes/pywal-dark.css",
     "electronReload": true,
     "devToolsOnStart": false,
     "devMenu": true,

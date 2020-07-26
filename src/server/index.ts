@@ -21,12 +21,14 @@ var express = require('express'),
 	oldProcess: any = {};
 
 // debugging server outside electron
-if(typeof process.send == "undefined") process.send = console.log;
+if(typeof process.send == "undefined")
+	process.send = console.log;
 
 Array.prototype["isIn"] = function(item: string) {
 	var returnVal = false
 	this.forEach((i: string) => {
-		if (i.toLowerCase().includes(item.toLowerCase())) returnVal = true;
+		if (i.toLowerCase().includes(item.toLowerCase()))
+			returnVal = true;
 	});
 	return returnVal;
 }
@@ -35,17 +37,19 @@ async function sendData(client: any) {
 	var currentProcess: any = await processMetadata.getCurrentProcess(oldProcess);
 
 	// Only send window title if it changed
-	if (oldProcess.title != currentProcess.title) client.emit('currentAppTitle', currentProcess.title);
+	if (oldProcess.title != currentProcess.title)
+		client.emit('currentAppTitle', currentProcess.title);
 
-	if (currentProcess.noWin) client.emit('currentApp', '{"icon": "none", "procName": ""}');
+	if (currentProcess.noWin)
+		client.emit('currentApp', '{"icon": "none", "procName": ""}');
 
 	// Send process name and icon if it changed
 	if (oldProcess.executable != currentProcess.executable && currentProcess.noWin == false) {
-		var path: string = __dirname.replace(/\\/g, "/") + "/user/palettes/" + currentProcess.name;
+		var appPath: string = path.join(__dirname, "/user/palettes", currentProcess.name);
 		var alwaysPalette = allApps.includes(config.alwaysPalette);
 		var tilesPath = alwaysPalette
-			? __dirname.replace(/\\/g, "/") + "/user/palettes/" + config.alwaysPalette + '/palette.json'
-			: path + '/palette.json';
+			? path.join(__dirname, "/user/palettes", config.alwaysPalette, '/palette.json')
+			: path.join(appPath, '/palette.json');
 		tiles = JSON.parse(await readfile(tilesPath));
 		client.emit(!alwaysPalette ? 'tiles' : 'tilesNoAnimation', makeTiles(tiles, config));
 
@@ -85,9 +89,9 @@ io.on('connection', async (socket: any) => {
 });
 
 
-expressApp.use(express.static(path.join(__dirname, '..')));
+expressApp.use(express.static(path.join(__dirname, '/..')));
 expressApp.all("/", (request: any, response: any) => {
-	response.sendFile(path.join(__dirname, '../client/index.html'));
+	response.sendFile(path.join(__dirname, '/../client/index.html'));
 });
 
 var errorcatch = (err: Error) => process.send(chalk.red(err.stack.replace(/\n/g, '\n\r')))
@@ -95,8 +99,6 @@ process.on('uncaughtException', (err: Error) => errorcatch(err));
 process.on('warning', (err: Error) => errorcatch(err));
 process.on('unhandledRejection', (err: Error) => errorcatch(err));
 
-server.on('listening', () => {
-	process.send(chalk.blue(chalk.bold(`Server started on *:${config.serverPort}`)));
-});
+server.on('listening', () => process.send(chalk.blue(chalk.bold(`Server started on *:${config.serverPort}`))));
 server.listen(config.serverPort);
 

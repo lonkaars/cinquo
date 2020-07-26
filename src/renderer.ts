@@ -50,25 +50,25 @@ $(window).on('load', () => {
 
 
 /* function switchPage(page, accent) {
-	$('.main .inner').html(pages.find(p => p.page == page).content);
-	document.documentElement.style.setProperty('--accent-color', accent);
-	currentPage = page
-	loadButtons()
-	loadTooltips()
-	loadDropdowns()
-	$('.inner *').addClass('notrans')
-	anime({
-		targets: '.inner > *',
-		opacity: [0, 1],
-		translateY: [30, 0],
-		duration: 700,
-		easing: 'easeOutExpo',
-		delay: anime.stagger(10),
-		complete: (anim) => {
-			$('.inner *').removeClass('notrans')
-			$('button').attr('style', '')
-		}
-	})
+   $('.main .inner').html(pages.find(p => p.page == page).content);
+   document.documentElement.style.setProperty('--accent-color', accent);
+   currentPage = page
+   loadButtons()
+   loadTooltips()
+   loadDropdowns()
+   $('.inner *').addClass('notrans')
+   anime({
+targets: '.inner > *',
+opacity: [0, 1],
+translateY: [30, 0],
+duration: 700,
+easing: 'easeOutExpo',
+delay: anime.stagger(10),
+complete: (anim) => {
+$('.inner *').removeClass('notrans')
+$('button').attr('style', '')
+}
+})
 } */
 
 function toast(text, duration, options) {
@@ -78,9 +78,9 @@ function toast(text, duration, options) {
 		$('.toast h3').text(text)
 	}
 	$('.toast')
-		.attr('class', 'toast')
-		.addClass(options ? options.type : '')
-		.addClass('show');
+	.attr('class', 'toast')
+	.addClass(options ? options.type : '')
+	.addClass('show');
 	setTimeout(() => {
 		$('.toast').removeClass('show')
 	}, duration);
@@ -96,43 +96,43 @@ function fileExists(file) {
 }
 
 /* function saveConfig() {
-	fs.writeFileSync(__dirname + '/server/user/config.json', JSON.stringify(config, null, 4))
-} */
+   fs.writeFileSync(__dirname + '/server/user/config.json', JSON.stringify(config, null, 4))
+   } */
 
 /* function restartServer() {
-	electron.ipcRenderer.send('serverRestart')
-} */
+   electron.ipcRenderer.send('serverRestart')
+   } */
 
 /* function newPane(paneID) {
-	var id = `pane-${paneID.replace(/\s/g, '-')}`
-	$('.main').append(
-		$('<div></div>')
-			.addClass('inner pane')
-			.addClass(id)
-			.attr('id', id)
-			.css('top', `${$('.main').scrollTop()}px`)
-	)
+   var id = `pane-${paneID.replace(/\s/g, '-')}`
+   $('.main').append(
+   $('<div></div>')
+   .addClass('inner pane')
+   .addClass(id)
+   .attr('id', id)
+   .css('top', `${$('.main').scrollTop()}px`)
+   )
 
-	setTimeout(() => {
-		$(`#${id}`).addClass('active')
-		$('.main .inner:not(.pane)').addClass('blur')
-		$('.main').css('overflow-y', 'hidden')
-	}, 0);
+   setTimeout(() => {
+   $(`#${id}`).addClass('active')
+   $('.main .inner:not(.pane)').addClass('blur')
+   $('.main').css('overflow-y', 'hidden')
+   }, 0);
 
-	$('.categories .category').on('click', () => {
-		$(`#${id}`).remove()
-		$('.main .inner').removeClass('blur')
-		$('.main').css('overflow-y', 'scroll')
-	})
+   $('.categories .category').on('click', () => {
+   $(`#${id}`).remove()
+   $('.main .inner').removeClass('blur')
+   $('.main').css('overflow-y', 'scroll')
+   })
 
-	return id
-} */
+   return id
+   } */
 
 /* function togglePane(id) {
-	$(`#${id}`).toggleClass('active')
-	$('.main .inner:not(.pane)').toggleClass('blur')
-	$('.main').css('overflow-y', $('.main').css('overflow-y') == 'hidden' ? 'scroll' : 'hidden')
-} */
+   $(`#${id}`).toggleClass('active')
+   $('.main .inner:not(.pane)').toggleClass('blur')
+   $('.main').css('overflow-y', $('.main').css('overflow-y') == 'hidden' ? 'scroll' : 'hidden')
+   } */
 
 function updateTermTheme() {
 	var getProp = varname => getComputedStyle(document.documentElement).getPropertyValue(varname).trim()
