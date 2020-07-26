@@ -1,5 +1,5 @@
-themes/* linguist-vendored
-schema/* linguist-vendored
-locale/* linguist-vendored
-font/* linguist-vendored
+src/themes/* linguist-vendored
+src/schema/* linguist-vendored
+src/locale/* linguist-vendored
+src/font/* linguist-vendored
 
