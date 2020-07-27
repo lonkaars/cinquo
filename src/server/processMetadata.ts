@@ -2,11 +2,13 @@ let exeicon: any, linuxDesktop: any;
 switch (process.platform) {
 	case 'win32': {
 		exeicon = require('icon256').extractIconAsync;
+		break;
 	}
 
 	case 'linux': {
 		linuxDesktop = require('linux-desktop');
 		linuxDesktop.indexItems();
+		break;
 	}
 }
 var activeWin = require('active-win'),
@@ -90,7 +92,7 @@ module.exports.getCurrentProcess = async function(oldApp: any) {
 		await mkdir(location);
 		await writefile(path.join(location, '/app.json'), '{}');
 		await writefile(path.join(location, '/palette.json'), '[]');
-		await writefile(path.join(location, '/icon.', returnObj.icon.type), returnObj.icon.data, 'base64');
+		await writefile(path.join(location, '/icon.' + returnObj.icon.type), returnObj.icon.data, 'base64');
 	}
 
 	// return empty icon
