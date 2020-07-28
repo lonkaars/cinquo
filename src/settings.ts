@@ -34,7 +34,7 @@ export class jsonprop {
 	}
 }
 
-export function (delay: number) {
+export function delayedSave (delay: number) {
 	clearTimeout(timer)
 	timer = setTimeout(() => {
 		module.exports.save()
