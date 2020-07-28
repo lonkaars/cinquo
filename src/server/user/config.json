@@ -1,6 +1,6 @@
 {
     "blurFx": false,
-    "serverPort": "3000",
+    "serverPort": "8205",
     "alwaysPalette": "",
     "startMinimized": false,
     "launchAtStartup": false,

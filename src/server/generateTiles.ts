@@ -1,6 +1,6 @@
 var cheerio = require('cheerio')
 
-module.exports.generateTiles = (json, config) => {
+export function generateTiles (json, config) {
 	var tiles = []
 	for (let i = 0; i < json.length; i++) {
 		// Create new element

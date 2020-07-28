@@ -1,13 +1,9 @@
-const {
-	app,
-	BrowserWindow,
-	remote,
-	ipcMain,
-	Tray,
-	Menu
-} = require('electron')
+import {app, BrowserWindow, ipcMain, Tray, Menu} from "electron";
+import * as autolaunch from "auto-launch";
+import * as chalk from "chalk";
+import * as cp from "child_process";
+
 var confg = require(__dirname + '/server/user/config.json'),
-	autolaunch = require('auto-launch'),
 	startup = new autolaunch({
 	name: 'Cinquo',
 	path: `${__dirname}/cinquo.vbs`
@@ -19,13 +15,10 @@ if (confg.electronReload)
 startup[confg.launchAtStartup ? 'enable' : 'disable']();
 
 // server
-var cp = require('child_process');
 var server = cp.fork(__dirname + '/server/index.js', [], {
 	silent: true
 });
 var serverOutput = [];
-var chalk = require('chalk');
-
 
 let win, tray;
 
@@ -102,12 +95,12 @@ server.on('message', data => {
 
 ipcMain.on('serverRestart', () => {
 	server.kill();
+	if (win) win.webContents.send('serverMessage', formatTermData(chalk.gray(chalk.bold("Server process killed"))));
 	server = cp.fork(__dirname + '/server/index.js', {stdio: 'pipe'});
 	server.on('message', data => {
 		var formatted = formatTermData(data);
 
-		if (win)
-			win.webContents.send('serverMessage', formatted);
+		if (win) win.webContents.send('serverMessage', formatted);
 		serverOutput.push(formatted);
 	})
 })

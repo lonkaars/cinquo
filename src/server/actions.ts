@@ -1,9 +1,10 @@
-var robot = require('robotjs'),
-	path = require('path'),
-	openFile = require('open'),
-	midi = require('midi'),
-	output = new midi.Output(),
-	fs = require('fs');
+import * as robot from "robotjs";
+import * as path from "path";
+import * as openFile from "open";
+import * as midi from "midi";
+import * as fs from "fs";
+
+var output = new midi.Output();
 
 // Get cinquo loop midi device
 for (let i = 0; i < output.getPortCount(); i++)
@@ -18,15 +19,14 @@ for(let i = 0; i < dirs.length; i++) {
 	var dir = fs.readdirSync(path.join(__dirname, `/modules/${dirs[i]}`));
 	if(!dir.includes('package.json'))
 		continue;
-	var package = JSON.parse(fs.readFileSync(__dirname + `/modules/${dirs[i]}/package.json`));
+	var modulePackage = JSON.parse(fs.readFileSync(__dirname + `/modules/${dirs[i]}/package.json`).toString());
 	modules.push({
-		name: package.name,
-		main: require(__dirname + `/modules/${dirs[i]}/${package.main}`)
+		name: modulePackage.name,
+		main: require(__dirname + `/modules/${dirs[i]}/${modulePackage.main}`)
 	});
 }
 
-
-module.exports.action = (a: any, d: any) => {
+export function action (a: any, d: any) {
 	if (!a || !a.action)
 		return;
 

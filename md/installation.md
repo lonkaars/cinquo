@@ -4,9 +4,16 @@
 
 > If you plan on developing for Cinquo, or develop node applications yourself, you might want to consider installing [nvm](https://github.com/nvm-sh/nvm) or [nvm for windows](https://github.com/coreybutler/nvm-windows/releases). This makes it really easy to manage and swap between node versions.
 
-1. Make sure you have Node 12 installed by running `node -v` in a command prompt. You can download it [here](https://nodejs.org/dist/latest-v12.x/), or run `nvm install 12.x.x` and `nvm use 12`
-2. If you run Windows, you should now open a new administrator command prompt, and run `npm i -g windows-build-tools` if you don't have Windows build tools for node already installed
-3. `cd` into the directory where you want Cinquo to live, it currently only runs in portable mode since it doesn't place files in `~/.config/cinquo` or `%appdata%/cinquo`
+1. Make sure you have Node installed by running `node -v` in a command prompt,
+   at the time of writing Cinquo works on Node 14. You can download it
+   [here](https://nodejs.org/dist/latest/), or run `nvm install node` and `nvm
+   use node`
+2. If you run Windows, you should now open a new administrator command prompt,
+   and run `npm i -g windows-build-tools` if you don't have Windows build tools
+   for node already installed
+3. `cd` into the directory where you want Cinquo to live, it currently only
+   runs in portable mode since it doesn't place files in `~/.config/cinquo` or
+   `%appdata%/cinquo`
 4. `git clone https://github.com/lonkaars/cinquo`
 5. `cd cinquo/src`
 6. `npm i`

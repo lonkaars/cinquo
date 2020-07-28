@@ -1,5 +1,5 @@
-var fs = require('fs'),
-	config = require(__dirname + '/server/user/config.json');
+import * as fs from "fs";
+var config = require(__dirname + '/server/user/config.json');
 
 if (!config.language) config.language = 'en-en';
 var localeLocation = `${__dirname}/locale/${config.language}.json`

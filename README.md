@@ -71,9 +71,7 @@ Installation guide is [here](md/installation.md)
 
 Cinquo is currently in a pretty much unusable state for regular users. I
 wouldn't recommend using this for important tasks, because all network traffic
-isn't encrypted. RobotJS doesn't work on Linux (for me?) with Node 12 and
-electron, and there are performace issues that cause a delay when changing app
-focus and it being reflected client-side which doesn't happen on Windows.
+isn't encrypted. 
 
 See the issues tab for planned features, known bugs and progress on milestone
 builds.

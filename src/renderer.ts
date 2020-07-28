@@ -1,13 +1,14 @@
-var $ = require('jquery'),
-	fs = require('fs'),
-	Terminal = require('xterm').Terminal,
-	tooltip = false,
+import * as $ from "jquery";
+import * as fs from "fs";
+import {Terminal} from "xterm";
+import * as electron from "electron";
+import * as settingsjs from "./settings";
+import {FitAddon} from "xterm-addon-fit";
+
+var tooltip = false,
 	dark = true,
-	electron = require('electron'),
 	currentWindow = electron.remote.getCurrentWindow(),
-	config = require(__dirname + '/server/user/config.json'),
-	settingsjs = require(__dirname + '/settings.js'),
-	FitAddon = require('xterm-addon-fit').FitAddon;
+	config = require(__dirname + '/server/user/config.json');
 
 var fitAddon = new FitAddon();
 var term = new Terminal({
@@ -18,11 +19,11 @@ var term = new Terminal({
 term.loadAddon(fitAddon)
 
 electron.ipcRenderer.on('serverMessage', (event, data) => {
-	term.write(data)
-})
+	term.write(data);
+});
 electron.ipcRenderer.on('previousServerLogs', (event, data) => {
-	term.write(data.join(''))
-})
+	term.write(data.join(''));
+});
 
 $(window).on('load', () => {
 	// Theme setting and adding dark class to body if dark theme
@@ -94,14 +95,6 @@ function fileExists(file) {
 		return false
 	}
 }
-
-/* function saveConfig() {
-   fs.writeFileSync(__dirname + '/server/user/config.json', JSON.stringify(config, null, 4))
-   } */
-
-/* function restartServer() {
-   electron.ipcRenderer.send('serverRestart')
-   } */
 
 /* function newPane(paneID) {
    var id = `pane-${paneID.replace(/\s/g, '-')}`

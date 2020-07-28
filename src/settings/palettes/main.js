@@ -1,24 +1,11 @@
-var {
-	settingsCollection,
-	header,
-	label,
-	input,
-	uuid,
-	userscript,
-	noDOMonclick,
-	overlay
-} = require(__dirname + '/../../settings.js'),
+var path = require('path'),
+	{ settingsCollection, header, label, input, uuid, userscript, noDOMonclick, overlay } = require(path.join(__dirname, '/../../settings.js')),
 	fs = require('fs'),
-	// rimraf = require('rimraf'),
+	shell = require('shelljs'),
 	palettes = fs.readdirSync(__dirname + '/../../server/user/palettes'),
 	fusejs = require('fuse.js'),
-	// generateTiles = require(__dirname + '/../../server/generateTiles.js').generateTiles,
-	path = require('path'),
-	fuse = new fusejs(palettes.map(i => {
-		return {
-			'key': i
-		}
-	}), {
+	generateTiles = require(__dirname + '/../../server/generateTiles.js').generateTiles,
+	fuse = new fusejs(palettes.map(i => { return { 'key': i } }), {
 		keys: ['key'],
 		threshold: 0.2
 	}),
@@ -26,14 +13,13 @@ var {
 
 palettes.forEach(name => {
 	var app = { name };
-	var appPath = path.join(__dirname, '/../../server/user/palettes/', name);
-	var appDir = fs.readdirSync(appPath);
-	// this is a temporary fix for the thing not saving the icon to a file properly
+	app.path = path.join(__dirname, '/../../server/user/palettes/', name);
+	var appDir = fs.readdirSync(app.path);
 	var iconIndex = appDir.find(f => f.includes('icon'))
 	if (iconIndex) {
 		var iconFile = iconIndex.match(/^(.+\.)(.+)$/);
 		app.icon = {
-			data: fs.readFileSync(path.join(appPath, iconFile[0]), "base64"),
+			data: fs.readFileSync(path.join(app.path, iconFile[0]), "base64"),
 			type: iconFile[2]
 		}
 	}
@@ -48,6 +34,7 @@ class app {
 		this.data = data;
 		this.$ = $('<div></div>')
 			.addClass('app')
+			.attr('id', this.id)
 			.attr('appName', data.name)
 			.append(
 				$('<span></span>')
@@ -77,7 +64,10 @@ class app {
 				this.editPanel.toggle();
 			}),
 			new appAction('delete_outline', 'Delete this palette', () => {
-				console.log("banaan")
+				shell.rm('-rf', this.data.path);
+				toast(`Deleted ${this.data.name}`, 2000, {type: 'complete'});
+				apps = apps.filter(i => i.name != this.data.name);
+				$(`#${this.id}`).remove();
 			}, 'var(--accent0)')
 		]
 
@@ -90,7 +80,7 @@ class app {
 		this.editPanel.run();
 		this.actions.forEach(action => {
 			if (action.run) action.run();
-		})
+		});
 	}
 }
 
@@ -140,7 +130,6 @@ class appList {
 		})
 	}
 }
-
 
 var page = new settingsCollection([
 	new header("Manage palettes"),

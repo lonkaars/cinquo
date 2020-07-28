@@ -1,20 +1,21 @@
-var express = require('express'),
-	expressApp = express(),
-	path = require('path'),
+require('source-map-support').install();
+
+import * as express from "express";
+import * as path from "path"
+import {SocketGD} from "socketgd";
+import * as processMetadata from "./processMetadata"
+import * as actions from "./actions";
+import * as palettes from "./palettes";
+import {generateTiles} from "./generateTiles";
+
+palettes.load();
+
+var expressApp = express(),
 	server = require('http').createServer(expressApp),
 	io = require('socket.io')(server),
-	processMetadata = require(__dirname + '/processMetadata.js'),
-	util = require('util'),
 	makeTiles = require(__dirname + '/generateTiles').generateTiles,
 	config = require(__dirname + '/user/config.json'),
-	actions = require(__dirname + '/actions.js'),
-	SocketGD = require('socketgd').SocketGD,
 	socketgd = new SocketGD(),
-	fs = require('fs'),
-	readfile = util.promisify(fs.readFile),
-	mkdir = util.promisify(fs.mkdir),
-	writefile = util.promisify(fs.writeFile),
-	allApps = fs.readdirSync(__dirname + '/user/palettes'),
 	c = require('chalk'),
 	chalk = new c.Instance({ level: 1 }),
 	tiles = [],
@@ -24,37 +25,25 @@ var express = require('express'),
 if(typeof process.send == "undefined")
 	process.send = console.log;
 
-Array.prototype["isIn"] = function(item: string) {
-	var returnVal = false
-	this.forEach((i: string) => {
-		if (i.toLowerCase().includes(item.toLowerCase()))
-			returnVal = true;
-	});
-	return returnVal;
-}
-
 async function sendData(client: any) {
-	var currentProcess: any = await processMetadata.getCurrentProcess(oldProcess);
+	var currentProcess: processMetadata.process = await processMetadata.getCurrentProcess();
 
 	// Only send window title if it changed
 	if (oldProcess.title != currentProcess.title)
 		client.emit('currentAppTitle', currentProcess.title);
 
-	if (currentProcess.noWin)
-		client.emit('currentApp', '{"icon": "none", "procName": ""}');
-
 	// Send process name and icon if it changed
-	if (oldProcess.executable != currentProcess.executable && currentProcess.noWin == false) {
-		var appPath: string = path.join(__dirname, "/user/palettes", currentProcess.name);
-		var alwaysPalette = allApps.includes(config.alwaysPalette);
-		var tilesPath = alwaysPalette
-			? path.join(__dirname, "/user/palettes", config.alwaysPalette, '/palette.json')
-			: path.join(appPath, '/palette.json');
-		tiles = JSON.parse(await readfile(tilesPath));
-		client.emit(!alwaysPalette ? 'tiles' : 'tilesNoAnimation', makeTiles(tiles, config));
+	if (oldProcess.executable != currentProcess.executable) {
+		let palette: palettes.palette = palettes.findByName(currentProcess.name);
 
+		if(!palette) {
+			let icon: palettes.paletteIcon = await processMetadata.getIcon(currentProcess.iconPath);
+			palette = await palettes.create(currentProcess.name, icon);
+		}
+
+		client.emit('tiles', makeTiles(palette.palette, palette.config));
 		client.emit('currentApp', JSON.stringify({
-			icon: currentProcess.icon.formatted,
+			icon: palette.icon.formatted,
 			procName: currentProcess.name
 		}));
 	}
@@ -81,13 +70,7 @@ io.on('connection', async (socket: any) => {
 		actions.action(tiles.find(i => i.id == data.el.match(/\d+/)), data);
 		ack();
 	});
-
-	socketgd.on('type', (data: any, ack: any) => {
-		require('robotjs').typeString(data);
-		ack();
-	});
 });
-
 
 expressApp.use(express.static(path.join(__dirname, '/..')));
 expressApp.all("/", (request: any, response: any) => {

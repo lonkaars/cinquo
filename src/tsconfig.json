@@ -2,7 +2,10 @@
     "compilerOptions": {
         "moduleResolution": "node",
         "pretty": false,
-		"target": "ESNext"
+		"target": "ESNext",
+		"module": "CommonJS",
+		"inlineSources": true,
+		"inlineSourceMap": true
     },
     "include": [
         "*.ts",
