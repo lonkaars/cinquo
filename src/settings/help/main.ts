@@ -1,13 +1,7 @@
-var {
-	settingsCollection,
-	header,
-	paragraph,
-	label,
-	userscript
-} = require('../../settings.js');
-
-var os = require('os');
-var dns = require('dns');
+import { settingsCollection, header, paragraph, label, userscript, config } from "../../settings.js";
+import * as os from "os";
+import * as dns from "dns";
+import * as $ from "jquery";
 var port = config.serverPort == 80 ? "" : `:<span>${config.serverPort}</span>`;
 var hostname = os.hostname().toLowerCase();
 
@@ -24,8 +18,8 @@ var page = new settingsCollection([
 	].join('<br>\n'), true),
 
 	new userscript(() => {
-		dns.lookup(os.hostname(), (err, add, fam) => {
-			$('#ip').text(add)
+		dns.lookup(os.hostname(), (error: Error, adress: string) => {
+			$('#ip').text(adress)
 		})
 	})
 ])

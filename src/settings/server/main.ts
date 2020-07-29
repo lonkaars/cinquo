@@ -1,13 +1,5 @@
-var {
-	settingsCollection,
-	header,
-	button,
-	label,
-	input,
-	toggle,
-	delayedSave,
-	jsonprop
-} = require(__dirname + '/../../settings.js');
+import { settingsCollection, header, button, label, input, toggle, delayedSave, jsonprop, config } from '../../settings';
+import * as $ from "jquery";
 
 class serverConsole {
 	constructor() {

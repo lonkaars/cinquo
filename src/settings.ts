@@ -2,18 +2,13 @@ import * as fs from "fs";
 import * as uuid from "uuid";
 import * as _ from "lodash";
 import * as $ from "jquery";
+export var config = require(__dirname + '/server/user/config.json');
 var timer = setTimeout(() => { }, 0);
 
-
-/**
- * $ is defined, since this file is loaded after jquery
- * Some things here are defined in renderer.js
- *
- * Beware of spaghetti code
- */
-
 export var pages = [];
-export {uuid} from "uuid";
+export {uuid as uuid};
+
+export var dark: boolean = config.settingsTheme.endsWith('-dark.css');
 
 export class jsonprop {
 	val: any;
@@ -64,7 +59,7 @@ export class label {
 	$: any;
 	html: string;
 
-	constructor(public text: string, help) {
+	constructor(public text: string, help?: string) {
 		this.id = uuid();
 		this.$ = $("<span></span>")
 		.text(this.text)
@@ -104,7 +99,7 @@ export class toggle {
 	html: string;
 	onclick: any;
 
-	constructor(state, onclick) {
+	constructor(state: any, onclick?: any) {
 		this.id = uuid();
 		this.$ = $("<div></div>")
 		.addClass('button')
@@ -125,7 +120,7 @@ export class toggle {
 		this.html = this.$[0].outerHTML;
 	}
 
-	addOnClick(el) {
+	addOnClick(el: string) {
 		var onclick = this.onclick
 		// $(el).on('click', this.onclick($(el).hasClass('off')));
 		$(el).on('click', function () {

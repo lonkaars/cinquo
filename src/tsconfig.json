@@ -9,7 +9,8 @@
     },
     "include": [
         "*.ts",
-        "server/*.ts"
+        "server/*.ts",
+		"settings/*/*.ts"
     ],
     "exclude": [
         "node_modules"

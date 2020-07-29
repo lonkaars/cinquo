@@ -78,8 +78,8 @@ export async function create(name: string, icon: paletteIcon) {
 		config: {},
 		icon
 	})
-	await p.save();
 	apps.push(p);
+	await p.save();
 	return p;
 }
 

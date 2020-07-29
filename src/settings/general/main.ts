@@ -1,16 +1,8 @@
-var {
-	settingsCollection,
-	header,
-	jsonprop,
-	label,
-	toggle,
-	dropdown,
-	delayedSave,
-	save,
-	input,
-	button,
-} = require('../../settings.js'),
-	locale = require(__dirname + '/../../locale.js');
+import { settingsCollection, header, jsonprop, label, toggle, dropdown, delayedSave, save, input, button, config } from "../../settings";
+import * as locale from "../../locale";
+import * as fs from "fs";
+import * as $ from "jquery";
+import {dark} from "../../renderer";
 
 var names = fs.readdirSync(__dirname + '/../../themes').filter(i => i.match(/.+(\-(light)|(dark))\.css/))
 var uniqueThemes = names.map(i => i.slice(0, i.match(/.+(\-light)\.css/) ? -10 : -9))

@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"description": "Cinquo server",
 	"main": "index.js",
+	"type": "module",
 	"scripts": {
 		"start": "electron .",
 		"rebuild": "electron-rebuild ."

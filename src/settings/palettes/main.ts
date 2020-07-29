@@ -1,10 +1,11 @@
-var path = require('path'),
-	{ settingsCollection, header, label, input, uuid, userscript, noDOMonclick, overlay } = require(path.join(__dirname, '/../../settings.js')),
-	fs = require('fs'),
-	shell = require('shelljs'),
-	palettes = fs.readdirSync(__dirname + '/../../server/user/palettes'),
-	fusejs = require('fuse.js'),
-	generateTiles = require(__dirname + '/../../server/generateTiles.js').generateTiles,
+import * as path from "path";
+import { settingsCollection, header, label, input, uuid, userscript, noDOMonclick, overlay } from '../../settings';
+import * as fs from "fs";
+import * as shell from "shelljs";
+import * as fusejs from "fuse.js";
+import {generateTiles} from "../../server/generateTiles";
+import * as $ from "jquery";
+var palettes = fs.readdirSync(__dirname + '/../../server/user/palettes'),
 	fuse = new fusejs(palettes.map(i => { return { 'key': i } }), {
 		keys: ['key'],
 		threshold: 0.2

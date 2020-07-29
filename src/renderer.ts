@@ -1,14 +1,12 @@
-import * as $ from "jquery";
-import * as fs from "fs";
-import {Terminal} from "xterm";
-import * as electron from "electron";
-import * as settingsjs from "./settings";
-import {FitAddon} from "xterm-addon-fit";
-
-var tooltip = false,
-	dark = true,
+var $ = require('jquery'),
+	fs = require('fs'),
+	Terminal = require('xterm').Terminal,
+	tooltip = false,
+	electron = require('electron'),
 	currentWindow = electron.remote.getCurrentWindow(),
-	config = require(__dirname + '/server/user/config.json');
+	config = require(__dirname + '/server/user/config.json'),
+	settingsjs = require(__dirname + '/settings.js'),
+	FitAddon = require('xterm-addon-fit').FitAddon;
 
 var fitAddon = new FitAddon();
 var term = new Terminal({
@@ -28,10 +26,8 @@ electron.ipcRenderer.on('previousServerLogs', (event, data) => {
 $(window).on('load', () => {
 	// Theme setting and adding dark class to body if dark theme
 	$('#theme').attr('href', config.settingsTheme)
-	dark = !!$('#theme').attr('href').endsWith('-dark.css')
-	if (dark) $('body').addClass('dark');
+	if (settingsjs.dark) $('body').addClass('dark');
 
-	//! New settings loading
 	settingsjs.load()
 
 	// Move help tooltip
@@ -72,7 +68,8 @@ $('button').attr('style', '')
 })
 } */
 
-function toast(text, duration, options) {
+// move to settings.ts as class
+function toast(text: string, duration: number, options: any) {
 	if (options && options.html) {
 		$('.toast').html(options.html)
 	} else {
@@ -87,7 +84,7 @@ function toast(text, duration, options) {
 	}, duration);
 }
 
-function fileExists(file) {
+function fileExists(file: string) {
 	try {
 		fs.readFileSync(file)
 		return true
@@ -128,7 +125,7 @@ function fileExists(file) {
    } */
 
 function updateTermTheme() {
-	var getProp = varname => getComputedStyle(document.documentElement).getPropertyValue(varname).trim()
+	var getProp = (varname: string) => getComputedStyle(document.documentElement).getPropertyValue(varname).trim()
 	term.setOption('theme', {
 		background: getProp('--shade1'),
 		black: getProp('--shade2'),
@@ -154,12 +151,12 @@ function updateTermTheme() {
 	})
 }
 
-function gridSize(e) {
+function gridSize(e: string) {
 	$(e).each(function () {
 		var el = $(this),
-			width = el.outerWidth(),
-			gridSize = Number(el.css('--grid-size')),
-			gridGutter = Number(el.css('--grid-gutter').match(/\d+/)[0])
+			width: number = el.outerWidth(),
+			gridSize: number = Number(el.css('--grid-size')),
+			gridGutter: number = Number(el.css('--grid-gutter').match(/\d+/)[0])
 
 		el.css('grid-auto-rows', `${(width - (gridGutter * (gridSize - 1))) / gridSize}px`)
 	})
