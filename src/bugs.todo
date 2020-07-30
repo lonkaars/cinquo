@@ -1,0 +1,3 @@
+- EADDRINUSE when reloading main window
+- Dark mode button not working
+- Settings not persistent when switching between pages

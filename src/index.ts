@@ -2,6 +2,7 @@ import {app, BrowserWindow, ipcMain, Tray, Menu} from "electron";
 import * as autolaunch from "auto-launch";
 import * as chalk from "chalk";
 import * as cp from "child_process";
+import * as path from "path";
 
 var confg = require(__dirname + '/server/user/config.json'),
 	startup = new autolaunch({
@@ -26,7 +27,7 @@ function createWindow() {
 		backgroundColor: "#000",
 		frame: false,
 		resizable: false,
-		icon: __dirname + "/icon.png"
+		icon: path.join(__dirname + '/icons/icon@256.png')
 	});
 
 	if (confg.devToolsOnStart)
@@ -57,7 +58,7 @@ app.on('activate', () => {
 });
 
 function createTray() {
-	tray = new Tray(__dirname + '/icon.png')
+	tray = new Tray(path.join(__dirname + '/icons/icon@256.png'))
 	var contextMenu = Menu.buildFromTemplate([
 		{
 			label: 'Show App',
