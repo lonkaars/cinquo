@@ -41,7 +41,7 @@ button {
     min-width: 90px;
 }
 
-.tooltip {
+#tooltip {
     border-radius: 0 !important;
     padding: 3px 5px !important;
     background: var(--shade1);

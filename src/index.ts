@@ -14,12 +14,6 @@ if (confg.electronReload)
 
 startup[confg.launchAtStartup ? 'enable' : 'disable']();
 
-// server
-var server = cp.fork(__dirname + '/server/index.js', [], {
-	silent: true
-});
-var serverOutput = [];
-
 let win, tray;
 
 function createWindow() {
@@ -64,19 +58,20 @@ app.on('activate', () => {
 
 function createTray() {
 	tray = new Tray(__dirname + '/icon.png')
-	var contextMenu = Menu.buildFromTemplate([{
-		label: 'Show App',
-		click: function () {
-			win ? win.show() : createWindow()
+	var contextMenu = Menu.buildFromTemplate([
+		{
+			label: 'Show App',
+			click: function () {
+				win ? win.show() : createWindow()
+			}
+		},
+		{
+			label: 'Quit',
+			click: function () {
+				app.isQuiting = true;
+				app.quit();
+			}
 		}
-	},
-	{
-		label: 'Quit',
-		click: function () {
-			app.isQuiting = true;
-			app.quit();
-		}
-	}
 	]);
 	tray.setContextMenu(contextMenu);
 	tray.setToolTip('Cinquo Daemon');
@@ -85,24 +80,21 @@ function createTray() {
 
 
 // server
-server.on('message', data => {
-	var formatted = formatTermData(data);
-
-	if (win)
-		win.webContents.send('serverMessage', formatted);
-	serverOutput.push(formatted);
-})
-
-ipcMain.on('serverRestart', () => {
-	server.kill();
-	if (win) win.webContents.send('serverMessage', formatTermData(chalk.gray(chalk.bold("Server process killed"))));
-	server = cp.fork(__dirname + '/server/index.js', {stdio: 'pipe'});
+var server: cp.ChildProcess;
+var serverOutput = [];
+function newServer() {
+	server = cp.fork(__dirname + '/server/index.js', [], { silent: true, stdio: 'pipe' });
 	server.on('message', data => {
 		var formatted = formatTermData(data);
-
 		if (win) win.webContents.send('serverMessage', formatted);
 		serverOutput.push(formatted);
 	})
+}
+ipcMain.on('serverReady', () => newServer())
+ipcMain.on('serverRestart', () => {
+	server.kill();
+	if (win) win.webContents.send('serverMessage', formatTermData(chalk.gray(chalk.bold("Server process killed"))));
+	newServer();
 })
 
 function formatTermData(data) {

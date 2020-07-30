@@ -81,14 +81,12 @@ export class label {
 			.text('help')
 		)
 		.on('mouseenter', function () {
-			tooltip = true;
-			$('.tooltip')
+			$('#tooltip')
 			.text($(this).attr('customTitle'))
 			.css('visibility', 'visible')
 		})
 		.on('mouseleave', () => {
-			tooltip = false;
-			$('.tooltip').css('visibility', 'hidden')
+			$('#tooltip').css('visibility', 'hidden')
 		})
 	}
 }
