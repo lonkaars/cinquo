@@ -235,7 +235,7 @@ export class input {
 	$: any;
 	html: string;
 
-	constructor(initial: string, public callback: void, type: string) {
+	constructor(initial: string, public callback: Function, type?: string) {
 		this.val = initial ? initial : "";
 		this.$ = $('<input></input>')
 		.attr('type', type ? type : 'text')

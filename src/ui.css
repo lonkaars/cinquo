@@ -192,15 +192,15 @@ body {
 
 
 .main .pane {
-	position: absolute;
-	left: calc(100vw - var(--menu-width));
+	position: fixed;
+	left: 100vw;
 	top: 0;
 	transition-property: left;
 	transition-duration: .4s;
 }
 
 .main .pane.active {
-	left: 0px;
+	left: var(--menu-width);
 }
 
 

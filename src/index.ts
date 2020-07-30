@@ -14,7 +14,7 @@ if (confg.electronReload)
 
 startup[confg.launchAtStartup ? 'enable' : 'disable']();
 
-let win, tray;
+let win: BrowserWindow, tray: Tray;
 
 function createWindow() {
 	win = new BrowserWindow({
@@ -45,7 +45,7 @@ app.on('ready', () => {
 		createWindow();
 })
 
-app.on('window-all-closed', e => e.preventDefault())
+app.on('window-all-closed', (e: Event) => e.preventDefault())
 
 ipcMain.on('quit', () => {
 	app.quit()
@@ -61,16 +61,11 @@ function createTray() {
 	var contextMenu = Menu.buildFromTemplate([
 		{
 			label: 'Show App',
-			click: function () {
-				win ? win.show() : createWindow()
-			}
+			click: () => win ? win.show() : createWindow()
 		},
 		{
 			label: 'Quit',
-			click: function () {
-				app.isQuiting = true;
-				app.quit();
-			}
+			click: () => app.quit()
 		}
 	]);
 	tray.setContextMenu(contextMenu);
@@ -84,7 +79,7 @@ var server: cp.ChildProcess;
 var serverOutput = [];
 function newServer() {
 	server = cp.fork(__dirname + '/server/index.js', [], { silent: true, stdio: 'pipe' });
-	server.on('message', data => {
+	server.on('message', (data: string) => {
 		var formatted = formatTermData(data);
 		if (win) win.webContents.send('serverMessage', formatted);
 		serverOutput.push(formatted);
@@ -97,7 +92,7 @@ ipcMain.on('serverRestart', () => {
 	newServer();
 })
 
-function formatTermData(data) {
+function formatTermData(data: string) {
 	return `${chalk.gray(`[${new Date().toLocaleTimeString('nl')}] `)}${data}\n\r`
 }
 
