@@ -2,7 +2,7 @@ import { settingsCollection, header, jsonprop, label, toggle, dropdown, delayedS
 import * as locale from "../../locale";
 import * as fs from "fs";
 import * as $ from "jquery";
-import {dark} from "../../renderer";
+import {dark} from "../../settings";
 
 var names = fs.readdirSync(__dirname + '/../../themes').filter(i => i.match(/.+(\-(light)|(dark))\.css/))
 var uniqueThemes = names.map(i => i.slice(0, i.match(/.+(\-light)\.css/) ? -10 : -9))
