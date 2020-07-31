@@ -21,9 +21,10 @@ class serverConsole {
 			fontFamily: 'Fira Code, consolas, monospace'
 		});
 		this.term.loadAddon(this.fitAddon);
-		electron.ipcRenderer.on('serverMessage', (event, data) => this.term.write(data));
-		electron.ipcRenderer.on('previousServerLogs', (event, data) => this.term.write(data.join('')));
+		electron.ipcRenderer.on('serverMessage', (event: Event, data: string) => this.term.write(data));
+		electron.ipcRenderer.on('previousServerLogs', (event: Event, data: Array<string>) => this.term.write(data.join('')));
 
+		electron.ipcRenderer.send('serverLogsPls');
 		electron.ipcRenderer.send('serverReady');
 
 		this.html = this.$[0].outerHTML;

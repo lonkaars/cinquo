@@ -37,7 +37,6 @@ function createWindow() {
 
 	win.loadFile('main.html');
 	win.on('closed', () => win = null);
-	win.webContents.on('dom-ready', () => win.webContents.send('previousServerLogs', serverOutput));
 }
 
 app.on('ready', () => {
@@ -86,10 +85,14 @@ function newServer() {
 		serverOutput.push(formatted);
 	})
 }
-ipcMain.on('serverReady', () => newServer())
+
+ipcMain.on('serverLogsPls', () => win.webContents.send('previousServerLogs', serverOutput));
+ipcMain.on('serverReady', () => (!server && newServer()))
 ipcMain.on('serverRestart', () => {
 	server.kill();
-	if (win) win.webContents.send('serverMessage', formatTermData(chalk.gray(chalk.bold("Server process killed"))));
+	var delmsg: string = formatTermData(chalk.gray(chalk.bold("Server process killed")));
+	if (win) win.webContents.send('serverMessage', delmsg);
+	serverOutput.push(delmsg);
 	newServer();
 })
 
