@@ -33,7 +33,7 @@ class app {
 			$('<img></img>')
 			.addClass('icon')
 			.attr('src', `data:image/${palette.icon.type};base64,${palette.icon.data}`)
-		)
+		);
 
 		this.editPanel = new overlay($('<h1></h1>').text(palette.name));
 
@@ -47,7 +47,7 @@ class app {
 				$(`#${this.id}`).remove();
 				electron.ipcRenderer.send('serverRestart')
 			}, 'var(--accent0)')
-		]
+		];
 
 		this.$.find('.actions').append(...this.actions.map(action => action.html));
 

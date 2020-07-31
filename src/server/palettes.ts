@@ -69,6 +69,7 @@ export async function load() {
 		}
 		apps.push(new palette(paletteData));
 	}));
+	apps = apps.sort((a: palette, b: palette) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
 }
 
 export async function create(name: string, icon: paletteIcon) {
