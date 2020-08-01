@@ -1,8 +1,7 @@
-import { settingsCollection, header, jsonprop, label, toggle, dropdown, delayedSave, save, input, button, config } from "../../settings";
+import { settingsCollection, header, dark, jsonprop, label, toggle, toggleJSON, dropdown, delayedSave, save, input, button, config } from "../../settings";
 import * as locale from "../../locale";
 import * as fs from "fs";
 import * as $ from "jquery";
-import {dark} from "../../settings";
 
 var names = fs.readdirSync(__dirname + '/../../themes').filter(i => i.match(/.+(\-(light)|(dark))\.css/))
 var uniqueThemes = names.map(i => i.slice(0, i.match(/.+(\-light)\.css/) ? -10 : -9))
@@ -15,38 +14,32 @@ for (let i = 0; i < uniqueThemes.length; i++) {
 		light: names.find(s => s == `${uniqueThemes[i]}-light.css`)
 	})
 }
-var activeTheme = $('#theme').attr('href').slice(7, $('#theme').attr('href').endsWith('-light.css') ? -10 : -9)
+var activeTheme: Function = (): string => $('#theme').attr('href').slice(7, $('#theme').attr('href').endsWith('-light.css') ? -10 : -9)
 
 var page = new settingsCollection([
 	new header("General settings"),
 
 	new label("Dark settings"),
-	new toggle(dark, function () {
-		if (dark) {
-			$(document.body).removeClass('dark')
-			$('#theme').attr('href', `${$('#theme').attr('href').slice(0, -9)}-light.css`)
-		} else {
-			$('#theme').attr('href', `${$('#theme').attr('href').slice(0, -10)}-dark.css`)
-			$(document.body).addClass('dark')
-		}
-		dark = !dark
+	new toggle(() => dark(), () => {
+		$(document.body)[`${dark() ? 'remove' : 'add'}Class`]('dark')
+		$('#theme').attr('href', `${$('#theme').attr('href').slice(0, dark() ? -9 : -10)}-${dark() ? 'light' : 'dark'}.css`)
 		config.settingsTheme = $('#theme').attr('href')
 		save()
 	}),
 
 	new label("Settings theme"),
-	new dropdown([activeTheme, ...themes.map(o => o.name)], n => {
-		$('#theme').attr('href', `themes/${n}-${dark ? 'dark' : 'light'}.css`)
+	new dropdown([activeTheme, ...themes.map(o => (() => o.name))], n => {
+		$('#theme').attr('href', `themes/${n}-${dark() ? 'dark' : 'light'}.css`)
 
 		config.settingsTheme = $('#theme').attr('href')
 		save()
 	}),
 
 	new label("Use blur effects"),
-	new toggle(new jsonprop('blurFx')),
+	new toggleJSON('blurFx'),
 
 	new label("Always palette", "Always load this palette regardless of foreground app"),
-	new input(config.alwaysPalette, n => {
+	new input(() => config.alwaysPalette, n => {
 		config.alwaysPalette = n
 		delayedSave(1000)
 	}),

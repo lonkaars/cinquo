@@ -1,4 +1,4 @@
-import { settingsCollection, header, button, label, input, toggle, delayedSave, jsonprop, config } from '../../settings';
+import { settingsCollection, header, button, label, input, toggleJSON, delayedSave, jsonprop, config } from '../../settings';
 import * as $ from "jquery";
 import { Terminal } from "xterm";
 import * as electron from "electron";
@@ -67,13 +67,13 @@ var page = new settingsCollection([
 	new header("Server settings"),
 
 	new label("Launch at startup"),
-	new toggle(new jsonprop('launchAtStartup')),
+	new toggleJSON('launchAtStartup'),
 
 	new label("Start minimized"),
-	new toggle(new jsonprop('startMinimized')),
+	new toggleJSON('startMinimized'),
 
 	new label("Server port"),
-	new input(config.serverPort, n => {
+	new input(() => config.serverPort, n => {
 		config.serverPort = n;
 		delayedSave(1000);
 	}, 'number'),

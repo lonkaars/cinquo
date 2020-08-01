@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import * as uuid from "uuid";
+import { v4 as uuid } from "uuid";
 import * as _ from "lodash";
 import * as $ from "jquery";
 export var config = require(__dirname + '/server/user/config.json');
@@ -8,7 +8,7 @@ var timer = setTimeout(() => { }, 0);
 export var pages = [];
 export {uuid as uuid};
 
-export var dark: boolean = config.settingsTheme.endsWith('-dark.css');
+export var dark: Function = (): boolean => config.settingsTheme.endsWith('-dark.css');
 
 export class jsonprop {
 	val: any;
@@ -17,7 +17,7 @@ export class jsonprop {
 		this.val = _.get(config, this.key);
 	}
 
-	set(n) {
+	set(n: any) {
 		this.val = n;
 		_.set(config, this.key, this.val);
 		module.exports.save();
@@ -92,12 +92,42 @@ export class label {
 }
 
 export class toggle {
-	public id: string = uuid();
+	id: string;
 	$: any;
 	html: string;
-	onclick: any;
+	onclick: noDOMonclick;
 
-	constructor(state: any, onclick?: any) {
+	constructor(public state: Function, onclick: Function) {
+		this.id = uuid();
+		this.onclick = new noDOMonclick(this.id, onclick);
+		this.$ = $("<div></div>")
+		.addClass('button')
+		.attr("id", this.id)
+		.append($('<div></div>').addClass('track'))
+		.append($('<div></div>').addClass('thumb'))
+
+		this.html = this.$[0].outerHTML;
+	}
+
+	run() {
+		$(`#${this.id}`).addClass(this.state() ? 'on' : 'off')
+
+		$(`#${this.id}`).on('click', () => {
+			$(`#${this.id}`).toggleClass('on off');
+			this.onclick.onclick($(this).hasClass('off'));
+		});
+	}
+}
+
+export class toggleJSON {
+	jsonprop: jsonprop;
+	id: string;
+	$: any;
+	html: string;
+	onclick: noDOMonclick;
+
+	constructor(public propName: string) {
+		this.jsonprop = new jsonprop(propName);
 		this.id = uuid();
 		this.$ = $("<div></div>")
 		.addClass('button')
@@ -105,25 +135,15 @@ export class toggle {
 		.append($('<div></div>').addClass('track'))
 		.append($('<div></div>').addClass('thumb'))
 
-		if (state instanceof module.exports.jsonprop) {
-			this.$.addClass(state.val ? 'on' : 'off')
-			this.onclick = () => {
-				state.toggle();
-			}
-		} else {
-			this.onclick = onclick;
-			this.$.addClass(state ? 'on' : 'off')
-		}
-
 		this.html = this.$[0].outerHTML;
 	}
 
-	addOnClick(el: string) {
-		var onclick = this.onclick
-		// $(el).on('click', this.onclick($(el).hasClass('off')));
-		$(el).on('click', function () {
-			$(this).toggleClass('on off');
-			onclick($(this).hasClass('off'));
+	run() {
+		$(`#${this.id}`).addClass(this.jsonprop.val ? 'on' : 'off')
+
+		$(`#${this.id}`).on('click', () => {
+			$(`#${this.id}`).toggleClass('on off');
+			this.jsonprop.toggle();
 		});
 	}
 }
@@ -169,7 +189,7 @@ export class dropdown {
 	html: string;
 	els: any[];
 
-	constructor(items: Array<string>, callback) {
+	constructor(public items: Array<Function>, callback) {
 		this.id = uuid();
 		this.$ = $('<div></div>')
 		.addClass('list')
@@ -182,7 +202,7 @@ export class dropdown {
 				id,
 				el: $('<span></span>')
 				.addClass(`item${i == 0 ? ' select' : ''}`)
-				.text(items[i])
+				.text(items[i]())
 				.attr('id', id),
 				onclick: function (context) {
 					callback($(context).text())
@@ -203,6 +223,7 @@ export class dropdown {
 	}
 
 	run() {
+		$(`#${this.id} .value`).text(this.items[0]())
 		this.els.forEach(item => {
 			$(`#${item.id}`).on('click', function () {
 				if ($(this).hasClass('select')) return;
@@ -231,12 +252,12 @@ export class dropdown {
 
 export class input {
 	public id: string = uuid();
-	val: string;
+	val: Function;
 	$: any;
 	html: string;
 
-	constructor(initial: string, public callback: Function, type?: string) {
-		this.val = initial ? initial : "";
+	constructor(initial: Function, public callback: Function, type?: string) {
+		this.val = initial ? initial : () => "";
 		this.$ = $('<input></input>')
 		.attr('type', type ? type : 'text')
 		.attr('id', this.id);
@@ -246,7 +267,7 @@ export class input {
 
 	run() {
 		var callback: any = this.callback;
-		var initial: string = this.val;
+		var initial: string = this.val();
 		$(`#${this.id}`)
 		.val(initial)
 		.on("change paste keyup", function () {

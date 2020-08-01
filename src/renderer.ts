@@ -10,7 +10,7 @@ var $ = require('jquery'),
 $(window).on('load', () => {
 	// Theme setting and adding dark class to body if dark theme
 	$('#theme').attr('href', config.settingsTheme)
-	if (settingsjs.dark) $('body').addClass('dark');
+	if (settingsjs.dark()) $('body').addClass('dark');
 
 	settingsjs.load()
 

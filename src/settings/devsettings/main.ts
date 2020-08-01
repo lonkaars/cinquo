@@ -3,7 +3,7 @@ var {
 	header,
 	button,
 	label,
-	toggle,
+	toggleJSON,
 	jsonprop
 } = require(__dirname + '/../../settings.js'),
 	locale = require(__dirname + '/../../locale.js');
@@ -20,16 +20,16 @@ var page = new settingsCollection([
 	}),
 
 	new label(locale("DevSettingsElectronReload", "Enable electron-reload")),
-	new toggle(new jsonprop("electronReload")),
+	new toggleJSON("electronReload"),
 
 	new label(locale("DevSettingsDevToolsOnStart", "Open DevTools on start")),
-	new toggle(new jsonprop("devToolsOnStart")),
+	new toggleJSON("devToolsOnStart"),
 
 	new label(locale("DevSettingsEnableDevSettings", "Enable (these) developer settings")),
-	new toggle(new jsonprop("devMenu")),
+	new toggleJSON("devMenu"),
 
 	new label(locale("DevSettingsElectronShortcuts", "Enable default electron shortcuts")),
-	new toggle(new jsonprop("defaultShortcuts"))
+	new toggleJSON("defaultShortcuts")
 ])
 
 module.exports = {
