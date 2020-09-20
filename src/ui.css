@@ -51,8 +51,7 @@ body {
 
 .menu {
 	width: var(--menu-width);
-	transition-duration: .2s;
-	transition-property: background-color, color;
+	transition: background-color .2s, color .2s, width .5s;
 	background-color: var(--shade1);
 	position: absolute;
 	height: 100vh;
@@ -68,6 +67,7 @@ body {
 	height: 100vh;
 	top: 0;
 	left: var(--menu-width);
+	transition: width .5s, left .5s;
 }
 
 .titlebar {
@@ -85,6 +85,7 @@ body {
 	left: 46px;
 	height: 32px;
 	width: calc(var(--menu-width) - 46px);
+	transition: width .5s;
 }
 
 .titlebar * {
@@ -131,6 +132,7 @@ body {
 	top: 50px;
 	left: 0;
 	width: var(--menu-width);
+	transition: width .5s;
 }
 
 .categories .category {
@@ -139,7 +141,7 @@ body {
 	width: var(--menu-width);
 	position: relative;
 	cursor: pointer;
-	transition: background .5s;
+	transition: background .5s, width .5s;
 }
 
 .category:hover {
@@ -195,8 +197,8 @@ body {
 	position: fixed;
 	left: 100vw;
 	top: 0;
-	transition-property: left;
-	transition-duration: .4s;
+	width: calc(100% - 32px - var(--menu-width));
+	transition: width .5s, left .4s;
 }
 
 .main .pane.active {
@@ -588,3 +590,16 @@ input[type=number]::-webkit-inner-spin-button {
 	width: 100%;
 	margin: 4px !important;
 }
+
+.paletteEditor .globalActionList {
+	float: right;
+}
+
+.paletteEditor .globalActionList .globalAction {
+	height: 40px;
+	background-color: var(--shade1);
+	border-radius: 6px;
+	display: inline-block;
+	margin-left: 16px;
+}
+

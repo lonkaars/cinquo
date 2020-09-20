@@ -1,16 +1,17 @@
-import { settingsCollection, header, label, input, uuid, userscript, noDOMonclick, overlay } from '../../settings';
+import { settingsCollection, header, label, input, uuid, userscript, noDOMonclick } from '../../settings';
 import * as fusejs from "fuse.js";
-import {generateTiles} from "../../server/generateTiles";
+/* import {generateTiles} from "../../server/generateTiles"; */
 import * as $ from "jquery";
 import * as palettes from "../../server/palettes";
 import * as electron from "electron";
+import * as editView from "./editView";
 
 var fuse: any;
 
 class app {
 	id: string;
 	$: JQuery;
-	editPanel: overlay;
+	editPanel: editView.paletteEditor;
 	actions: Array<appAction>;
 	html: string;
 
@@ -35,7 +36,7 @@ class app {
 			.attr('src', `data:image/${palette.icon.type};base64,${palette.icon.data}`)
 		);
 
-		this.editPanel = new overlay($('<h1></h1>').text(palette.name));
+		this.editPanel = new editView.paletteEditor(palette);
 
 		this.actions = [
 			new appAction('edit', 'Edit this palette', () => {
@@ -152,7 +153,7 @@ var page = new settingsCollection([
 	}),
 	new userscript(() => $('input').css('width', '100%')),
 
-		new label("Palettes"),
+	new label("Palettes"),
 	new appList()
 ])
 
