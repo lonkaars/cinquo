@@ -29,5 +29,6 @@ module.exports = {
 	page,
 	id: "help",
 	position: 4,
+	icon: "help",
 	accentColor: "var(--accent0)"
 }

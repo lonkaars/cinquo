@@ -56,5 +56,6 @@ module.exports = {
 	page,
 	id: "general",
 	position: 3,
+	icon: "settings",
 	accentColor: "var(--accent7)"
 }

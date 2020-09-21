@@ -340,6 +340,11 @@ export function generateCategories () {
 			$('<span></span>')
 			.addClass('name')
 			.text(page.name)
+		).append(
+			$('<i></i>')
+			.addClass("material-icons-round")
+			.addClass("icon")
+			.text(page.icon ? page.icon : "help")
 		)[0].outerHTML
 	});
 

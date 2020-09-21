@@ -17,6 +17,7 @@ export class globalAction {
 	id: string;
 	$: JQuery;
 	html: string;
+	run: Function;
 }
 
 export class globalActionIcon implements globalAction {
@@ -36,6 +37,10 @@ export class globalActionIcon implements globalAction {
 				.text(icon)
 		);
 		this.html = this.$[0].outerHTML;
+	}
+
+	run() {
+		console.log("run")
 	}
 }
 export class globalActionButton implements globalAction {
@@ -57,6 +62,10 @@ export class globalActionButton implements globalAction {
 			this.toggle.html
 		);
 		this.html = this.$[0].outerHTML;
+	}
+
+	run() {
+		this.toggle.run();
 	}
 }
 
@@ -83,6 +92,10 @@ export class globalActionList {
 		this.actions.push(action);
 		this.update();
 	}
+
+	run() {
+		this.actions.forEach(action => { if(action.run) action.run() });
+	}
 }
 
 export class paletteEditor {
@@ -90,6 +103,7 @@ export class paletteEditor {
 	$: JQuery;
 	html: string;
 	overlay: overlay;
+	actionList: globalActionList;
 
 	constructor(public palette: palette) {
 		this.id = uuid();
@@ -100,11 +114,11 @@ export class paletteEditor {
 		h.$.css("display", "inline-block");
 		this.$.append(h.$);
 
-		var actionList = new globalActionList();
-		actionList.add(new globalActionIcon("add"));
-		actionList.add(new globalActionIcon("visibility_off"));
-		actionList.add(new globalActionButton("Bulk mode", () => console.log("gert")));
-		this.$.append(actionList.html);
+		this.actionList = new globalActionList();
+		this.actionList.add(new globalActionIcon("add"));
+		this.actionList.add(new globalActionIcon("visibility_off"));
+		this.actionList.add(new globalActionButton("Bulk mode", () => console.log("gert")));
+		this.$.append(this.actionList.html);
 
 		this.html = this.$[0].outerHTML;
 		this.overlay = new overlay(this.html);
@@ -112,10 +126,12 @@ export class paletteEditor {
 
 	run() {
 		this.overlay.run();
+		this.actionList.run();
 	}
 
 	toggle() {
 		document.documentElement.style.setProperty("--menu-width", "79px"),
+		$(".menu").addClass("small")
 		this.overlay.toggle();
 	}
 }

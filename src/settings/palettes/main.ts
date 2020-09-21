@@ -162,5 +162,6 @@ module.exports = {
 	page,
 	id: "palettes",
 	position: 1,
+	icon: "border_all",
 	accentColor: "var(--accent5)"
 }

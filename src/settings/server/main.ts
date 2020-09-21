@@ -90,5 +90,6 @@ module.exports = {
 	page,
 	id: "server",
 	position: 2,
+	icon: "wifi_tethering",
 	accentColor: "var(--accent6)"
 }

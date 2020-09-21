@@ -38,5 +38,6 @@ module.exports = {
 	id: "devsettings",
 	hidden: true,
 	position: 5,
+	icon: "code",
 	accentColor: "var(--accent1)"
 }
