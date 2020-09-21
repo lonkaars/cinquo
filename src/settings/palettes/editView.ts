@@ -1,4 +1,5 @@
 import { overlay, uuid, header, noDOMonclick, toggle } from "../../settings";
+import { generateTiles } from "../../server/generateTiles";
 import { palette } from "../../server/palettes";
 import * as $ from "jquery";
 
@@ -26,10 +27,12 @@ export class globalActionIcon implements globalAction {
 	html: string;
 	onclick: noDOMonclick;
 
-	constructor(icon: string) {
+	constructor(icon: string, onclick: Function) {
 		this.id = uuid();
 		this.$ = $("<div></div>");
-		this.$.addClass("globalAction");
+		this.$.addClass("globalAction globalActionIcon");
+		this.$.attr("id", this.id);
+		this.onclick = new noDOMonclick(this.id, () => onclick(this.id));
 		this.$.append(
 			$("<i></i>")
 				.addClass("material-icons-round")
@@ -39,8 +42,8 @@ export class globalActionIcon implements globalAction {
 		this.html = this.$[0].outerHTML;
 	}
 
-	run() {
-		console.log("run")
+	run() { 
+		this.onclick.run();
 	}
 }
 export class globalActionButton implements globalAction {
@@ -52,7 +55,7 @@ export class globalActionButton implements globalAction {
 	constructor(public label: string, public onclick: Function) {
 		this.id = uuid();
 		this.$ = $("<div></div>");
-		this.$.addClass("globalAction");
+		this.$.addClass("globalAction globalActionToggle");
 		this.toggle = new toggle(() => false, this.onclick);
 		this.$.append(
 			$("<span></span>")
@@ -94,8 +97,32 @@ export class globalActionList {
 	}
 
 	run() {
-		this.actions.forEach(action => { if(action.run) action.run() });
+		this.actions.forEach(action => { action.run() });
 	}
+}
+
+export class paletteView {
+	id: string;
+	$: JQuery;
+	html: string;
+
+	constructor(public palette: palette) {
+		this.id = uuid();
+		this.$ = $("<div></div>");
+		this.$.addClass("paletteView panels mono")
+		this.$.append(generateTiles(this.palette.palette, this.palette.config));
+		$("head").append(
+			$("<link/>")
+			.attr("rel", "stylesheet")
+			.attr("type", "text/css")
+			.attr("media", "screen")
+			.attr("href", "client/css/panels.css")
+		)
+
+		this.html = this.$[0].outerHTML;
+	}
+
+	run() { }
 }
 
 export class paletteEditor {
@@ -104,21 +131,32 @@ export class paletteEditor {
 	html: string;
 	overlay: overlay;
 	actionList: globalActionList;
+	header: header;
+	paletteView: paletteView;
 
 	constructor(public palette: palette) {
 		this.id = uuid();
 		this.$ = $("<div></div>");
+		this.$.attr("id", this.id);
 		this.$.addClass("paletteEditor");
 
-		var h = new header(palette.name);
-		h.$.css("display", "inline-block");
-		this.$.append(h.$);
+		this.header = new header(palette.name);
+		this.header.$.css("display", "inline-block");
+		this.$.append(this.header.html);
 
 		this.actionList = new globalActionList();
-		this.actionList.add(new globalActionIcon("add"));
-		this.actionList.add(new globalActionIcon("visibility_off"));
+		this.actionList.add(new globalActionIcon("add", () => console.log(`banaan ${this.id}`)));
+		this.actionList.add(new globalActionIcon("visibility_off", (buttonID: string) => {
+			$(`#${this.id} .paletteView`).toggleClass("mono")
+			$(`#${buttonID} i`).text($(`#${buttonID} i`).text() == "visibility_off" ? "visibility" : "visibility_off");
+			$(`#${buttonID}`).toggleClass("on off")
+
+		}));
 		this.actionList.add(new globalActionButton("Bulk mode", () => console.log("gert")));
 		this.$.append(this.actionList.html);
+
+		this.paletteView = new paletteView(this.palette);
+		this.$.append(this.paletteView.html);
 
 		this.html = this.$[0].outerHTML;
 		this.overlay = new overlay(this.html);
@@ -127,6 +165,7 @@ export class paletteEditor {
 	run() {
 		this.overlay.run();
 		this.actionList.run();
+		this.paletteView.run();
 	}
 
 	toggle() {

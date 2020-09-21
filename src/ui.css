@@ -614,6 +614,10 @@ input[type=number]::-webkit-inner-spin-button {
 	margin: 4px !important;
 }
 
+.paletteEditor h1 {
+	display: inline-block;
+}
+
 .paletteEditor .globalActionList {
 	float: right;
 }
@@ -627,6 +631,11 @@ input[type=number]::-webkit-inner-spin-button {
 	vertical-align: top;
 }
 
+.paletteEditor .globalActionList .globalAction.on {
+	background-color: var(--shade6);
+	color: var(--shade0);
+}
+
 .paletteEditor .globalActionList .globalAction span {
 	display: inline-block;
 	vertical-align: top;
@@ -635,8 +644,39 @@ input[type=number]::-webkit-inner-spin-button {
 	user-select: none;
 }
 
+.paletteEditor .globalActionList .globalActionIcon {
+	cursor: pointer;
+}
+
 .paletteEditor .globalActionList .button {
 	margin: 8px;
 	display: inline-block;
+}
+
+.paletteEditor .paletteView {
+	margin-top: 24px;
+}
+
+.paletteEditor .panels {
+	width: calc(100vw - var(--menu-width) - 32px);
+	grid-auto-rows: calc(calc(100vw - var(--menu-width)) / 16 - 8px);
+	user-select: none;
+	pointer-events: none;
+}
+
+.paletteEditor .paletteView.mono .panel {
+	background: var(--shade1) !important;
+}
+
+.paletteEditor .paletteView.mono .panel * {
+	color: var(--shade6) !important;
+}
+
+.paletteEditor .paletteView:not(.mono) {
+	color: #fff;
+}
+
+.paletteEditor .paletteView.mono .panel *::-webkit-slider-thumb {
+	background: var(--shade5) !important;
 }
 

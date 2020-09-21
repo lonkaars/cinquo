@@ -9,5 +9,6 @@
     "devToolsOnStart": false,
     "devMenu": true,
     "defaultShortcuts": true,
+    "windowResizable": false,
     "language": "en-us"
 }
