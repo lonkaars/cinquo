@@ -198,7 +198,7 @@ body {
 	left: 100vw;
 	top: 0;
 	width: calc(100% - 32px - var(--menu-width));
-	transition: width .5s, left .4s;
+	transition: width .5s, left .5s;
 }
 
 .main .pane.active {
@@ -601,5 +601,18 @@ input[type=number]::-webkit-inner-spin-button {
 	border-radius: 6px;
 	display: inline-block;
 	margin-left: 16px;
+	vertical-align: top;
+}
+
+.paletteEditor .globalActionList .globalAction span {
+	display: inline-block;
+	vertical-align: top;
+	padding: 0;
+	margin: 10px;
+}
+
+.paletteEditor .globalActionList .button {
+	margin: 8px;
+	display: inline-block;
 }
 

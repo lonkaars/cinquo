@@ -1,4 +1,4 @@
-import { overlay, uuid, header, noDOMonclick } from "../../settings";
+import { overlay, uuid, header, noDOMonclick, toggle } from "../../settings";
 import { palette } from "../../server/palettes";
 import * as $ from "jquery";
 
@@ -17,7 +17,6 @@ export class globalAction {
 	id: string;
 	$: JQuery;
 	html: string;
-	onclick: noDOMonclick;
 }
 
 export class globalActionIcon implements globalAction {
@@ -43,8 +42,22 @@ export class globalActionButton implements globalAction {
 	id: string;
 	$: JQuery;
 	html: string;
-	label: string;
-	onclick: noDOMonclick;
+	toggle: toggle;
+
+	constructor(public label: string, public onclick: Function) {
+		this.id = uuid();
+		this.$ = $("<div></div>");
+		this.$.addClass("globalAction");
+		this.toggle = new toggle(() => false, this.onclick);
+		this.$.append(
+			$("<span></span>")
+				.text(this.label)
+		);
+		this.$.append(
+			this.toggle.html
+		);
+		this.html = this.$[0].outerHTML;
+	}
 }
 
 export class globalActionList {
@@ -90,6 +103,7 @@ export class paletteEditor {
 		var actionList = new globalActionList();
 		actionList.add(new globalActionIcon("add"));
 		actionList.add(new globalActionIcon("visibility_off"));
+		actionList.add(new globalActionButton("Bulk mode", () => console.log("gert")));
 		this.$.append(actionList.html);
 
 		this.html = this.$[0].outerHTML;
