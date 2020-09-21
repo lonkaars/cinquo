@@ -19,14 +19,14 @@ let win: BrowserWindow, tray: Tray;
 
 function createWindow() {
 	win = new BrowserWindow({
-		width: 867,
-		height: 584,
+		width: 1020,
+		height: 700,
 		webPreferences: {
 			nodeIntegration: true
 		},
 		backgroundColor: "#000",
 		frame: false,
-		resizable: false,
+		resizable: confg.windowResizable,
 		icon: path.join(__dirname + '/icons/icon@256.png')
 	});
 

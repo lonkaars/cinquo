@@ -29,7 +29,10 @@ var page = new settingsCollection([
 	new toggleJSON("devMenu"),
 
 	new label(locale("DevSettingsElectronShortcuts", "Enable default electron shortcuts")),
-	new toggleJSON("defaultShortcuts")
+	new toggleJSON("defaultShortcuts"),
+
+	new label(locale("DevSettingsEnableResize", "Enable window resizability")),
+	new toggleJSON("windowResizable")
 ])
 
 module.exports = {
