@@ -2,7 +2,7 @@ import { settingsCollection, header, dark, jsonprop, label, toggle, toggleJSON, 
 import * as locale from "../../locale";
 import * as fs from "fs";
 import * as $ from "jquery";
-import * as electon from "electron";
+import * as electron from "electron";
 
 var names = fs.readdirSync(__dirname + '/../../themes').filter(i => i.match(/.+(\-(light)|(dark))\.css/))
 var uniqueThemes = names.map(i => i.slice(0, i.match(/.+(\-light)\.css/) ? -10 : -9))
