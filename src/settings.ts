@@ -300,7 +300,7 @@ export class settingsCollection {
 		this.sourceArray.forEach(settingsItem => {
 			if (settingsItem.html) out += `\n\n${settingsItem.html}`
 		});
-		$(".main .inner").html(out);
+		$(".main .inner:nth-child(1)").html(out); // FIXME: use new settings system instead of janky static html
 	};
 
 	afterInserted() {
