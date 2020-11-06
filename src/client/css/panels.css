@@ -43,7 +43,7 @@
 .panels .panel:not(.withSlider) {
     transition: transform .1s;
 }
-.panels .panel:not(.withSlider):active {
+.panels:not(.noAni) .panel:not(.withSlider):active {
     transform: scale(.95);
     opacity: .9;
 }

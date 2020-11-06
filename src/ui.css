@@ -661,7 +661,6 @@ input[type=number]::-webkit-inner-spin-button {
 	width: calc(100vw - var(--menu-width) - 32px);
 	grid-auto-rows: calc(calc(100vw - var(--menu-width)) / 16 - 8px);
 	user-select: none;
-	pointer-events: none;
 }
 
 .paletteEditor .paletteView.mono .panel {
@@ -678,5 +677,55 @@ input[type=number]::-webkit-inner-spin-button {
 
 .paletteEditor .paletteView.mono .panel *::-webkit-slider-thumb {
 	background: var(--shade5) !important;
+}
+
+
+.paletteEditor .panel:hover {
+	z-index: 999;
+}
+.paletteEditor .panel:hover .tileViewActions .tileViewAction {
+	opacity: 1;
+}
+
+.tileViewActions .tileViewAction {
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+	background-color: var(--shade0);
+	position: absolute;
+	box-shadow: 0px 3px 7px #0003;
+	opacity: 0;
+	transition-property: opacity;
+	transition-duration: .1s;
+}
+
+.tileViewActions .tileViewAction:nth-child(1) {
+	left: -14px;
+	top: -14px;
+	cursor: pointer;
+}
+
+.tileViewActions .tileViewAction:nth-child(2) {
+	right: -14px;
+	top: -14px;
+	cursor: pointer;
+}
+
+.tileViewActions .tileViewAction:nth-child(3) {
+	right: -14px;
+	bottom: -14px;
+	cursor: nw-resize;
+}
+.tileViewActions .tileViewAction:nth-child(3) .icon {
+	transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.tileViewActions .tileViewAction .icon {
+	z-index: 1;
+	position: absolute;
+	left: 50% !important;
+	top: 50% !important;
+	transform: translate(-50%, -50%);
+	font-size: 24px !important;
 }
 

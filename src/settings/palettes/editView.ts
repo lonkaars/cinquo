@@ -97,7 +97,55 @@ export class globalActionList {
 	}
 
 	run() {
-		this.actions.forEach(action => { action.run() });
+		this.actions.forEach(action => action.run?.());
+	}
+}
+
+export class tileViewAction {
+	id: string;
+	$: JQuery;
+	html: string;
+	onclick: noDOMonclick;
+
+	constructor(public icon: string, onclick: Function) {
+		this.id = uuid();
+		this.onclick = new noDOMonclick(this.id, onclick);
+		this.$ = $("<div></div>")
+			.addClass("tileViewAction")
+			.append(
+				$("<i></i>")
+				.addClass("icon material-icons-round")
+				.text(icon)
+			);
+		this.html = this.$[0].outerHTML;
+	}
+
+	run() {
+		this.onclick.run();
+	}
+}
+
+export class tileViewActions {
+	id: string;
+	$: JQuery;
+	html: string;
+	actions: Array<tileViewAction>;
+
+	constructor(public el: JQuery) {
+		this.id = uuid();
+		this.$ = $("<div></div>")
+		.addClass("tileViewActions");
+		this.actions = [
+			new tileViewAction("delete_outline", () => console.log("verwijder?")),
+			new tileViewAction("edit", () => console.log("bewerk?")),
+			new tileViewAction("open_in_full", () => console.log("resize?"))
+		]
+		this.actions.forEach(a => this.$.append(a.html));
+		this.html = this.$[0].outerHTML;
+	}
+
+	run() {
+		this.actions.forEach(a => a.run());
 	}
 }
 
@@ -109,8 +157,8 @@ export class paletteView {
 	constructor(public palette: palette) {
 		this.id = uuid();
 		this.$ = $("<div></div>");
-		this.$.addClass("paletteView panels mono")
-		this.$.append(generateTiles(this.palette.palette, this.palette.config));
+		this.$.addClass("paletteView panels noAni mono")
+		this.renderTiles();
 		$("head").append(
 			$("<link/>")
 			.attr("rel", "stylesheet")
@@ -120,6 +168,14 @@ export class paletteView {
 		)
 
 		this.html = this.$[0].outerHTML;
+	}
+
+	renderTiles() {
+		var $$ = $(generateTiles(this.palette.palette, this.palette.config));
+		$$.each(function(){
+			$(this).append(new tileViewActions($(this)).html)
+		});
+		this.$.append($$);
 	}
 
 	run() { }

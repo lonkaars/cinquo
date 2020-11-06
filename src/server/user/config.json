@@ -4,7 +4,7 @@
     "alwaysPalette": "",
     "startMinimized": false,
     "launchAtStartup": false,
-    "settingsTheme": "themes/horizon-light.css",
+    "settingsTheme": "themes/default-light.css",
     "electronReload": false,
     "devToolsOnStart": false,
     "devMenu": true,
